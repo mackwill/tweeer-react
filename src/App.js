@@ -5,17 +5,18 @@ import Header from "./components/Header/Header";
 import logo from "./logo.svg";
 import "./App.scss";
 import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
+import TweetList from "./components/Tweet/TweetList";
 
 function App() {
   const [state, setState] = useState({
     composeText: "",
-    tweetCharCount: 0,
+    tweetCharCount: 140,
   });
 
   const composeTweetChange = function (e) {
     setState({
       composeText: e.target.value,
-      tweetCharCount: e.target.value.length,
+      tweetCharCount: 140 - e.target.value.length,
     });
   };
 
@@ -29,7 +30,11 @@ function App() {
     <div className="App">
       <Navbar />
       <Header username={"Visitor"} />
-      <ComposeTweet onChange={composeTweetChange} />
+      <ComposeTweet
+        onChange={composeTweetChange}
+        count={state.tweetCharCount}
+      />
+      <TweetList />
     </div>
   );
 }
