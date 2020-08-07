@@ -1,7 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext");
 
+$backgroundColor: #f4f1ec;
+
 .App {
   text-align: center;
+  background-color: $backgroundColor;
+  color: #ffffff;
 }
 
 .App-logo {

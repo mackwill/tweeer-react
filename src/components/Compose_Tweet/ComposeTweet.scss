@@ -1,0 +1,14 @@
+.MuiGrid-root {
+  .MuiGrid-item {
+    margin: auto;
+  }
+
+  .MuiFormControl-root {
+    margin: 0;
+  }
+
+  #header-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+}
