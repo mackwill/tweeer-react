@@ -1,0 +1,21 @@
+DROP TABLE IF EXISTS users CASCADE;
+
+DROP TABLE IF EXISTS tweets CASCADE;
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY NOT NULL,
+  username VARCHAR(100) NOT NULL,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  profile_picture_url TEXT,
+  date_joined TIMESTAMP NOT NULL
+);
+
+CREATE TABLE tweets (
+  id SERIAL PRIMARY KEY NOT NULL,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  content TEXT NOT NULL,
+  tweet_date TIMESTAMP NOT NULL
+);
