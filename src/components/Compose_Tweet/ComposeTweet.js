@@ -44,25 +44,26 @@ export default function ComposeTweet(props) {
             noValidate
             autoComplete="off"
             mt={"1rem"}
-            onChange={props.onChange}
+            onSubmit={props.submitTweet}
           >
             <TextField
               id="standard-basic"
               label="Tweet"
               placeholder="What are you humming about?"
+              onChange={props.onChange}
               fullWidth={true}
             />
+
+            <div id="header-footer" justify="space-between">
+              <div id="header-footer-left">
+                <Button btnType={"submit"} message={"Tweet"} />
+              </div>
+              <div id="header-footer-right">
+                <p>{props.count}</p>
+              </div>
+            </div>
           </form>
         </Box>
-
-        <div id="header-footer" justify="space-between">
-          <div id="header-footer-left">
-            <Button message={"Tweet"} />
-          </div>
-          <div id="header-footer-right">
-            <p>{props.count}</p>
-          </div>
-        </div>
       </Grid>
     </Grid>
   );

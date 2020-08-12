@@ -52,7 +52,9 @@ export default function Tweet(props) {
         <p className="submitted-tweet">{props.content.text}</p>
         <footer>
           <div className="tweet-footer footer-left">
-            <p className="date-of-tweet">{props.created_at} days ago</p>
+            <p className="date-of-tweet">
+              {findDaysAgo(props.created_at)} days ago
+            </p>
           </div>
           <div className="tweet-footer footer-right">
             <a href="#">
