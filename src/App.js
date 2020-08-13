@@ -6,6 +6,7 @@ import logo from "./logo.svg";
 import "./App.scss";
 import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
 import TweetList from "./components/Tweet/TweetList";
+import axios from "axios";
 
 const tweetList = [
   {
@@ -60,17 +61,18 @@ const tweetList = [
 ];
 const user = {
   id: 1,
-  username: "TheCage",
+  username: "nicolasCage",
   firstName: "Nicolas",
   lastName: "Cage",
-  email: "nicolas.cage@thecage.com",
+  email: "nicolasCage@gmail.com",
   password: "password",
   avatar: "https://i.imgur.com/nlhLi3I.png",
   dateJoined: 1596832658,
 };
 function App() {
   const [state, setState] = useState({
-    tweets: [...tweetList],
+    tweets: [],
+    users: [],
     composeText: "",
     tweetCharCount: 140,
   });
@@ -87,25 +89,26 @@ function App() {
 
   const submitTweet = (e) => {
     e.preventDefault();
+
     const newTweet = {
       id: state.tweets.length + 1,
-      user: {
-        name: user.firstName + " " + user.lastName,
-        avatars: user.avatar,
-        handle: user.username,
-      },
-      content: {
-        text: state.composeText,
-      },
+      first_name: user.firstName,
+      last_name: user.lastName,
+      profile_picture_url: user.avatar,
+      user_id: user.id,
+      username: user.username,
+      content: state.composeText,
       created_at: new Date(),
     };
-
     const newTweets = [newTweet, ...state.tweets];
 
-    setState((prev) => ({
-      ...prev,
-      tweets: newTweets,
-    }));
+    return axios.put("/api/tweets", newTweet).then((res) => {
+      setState((prev) => ({
+        ...prev,
+        composeText: "",
+        tweets: newTweets,
+      }));
+    });
   };
 
   useEffect(() => {
@@ -113,6 +116,21 @@ function App() {
       alert("YOU OVER");
     }
   }, [state.composeText]);
+
+  useEffect(() => {
+    Promise.all([
+      Promise.resolve(axios.get("/api/tweets")),
+      Promise.resolve(axios.get("/api/users")),
+    ]).then((all) => {
+      console.log("all[1]", all[0].data);
+      console.log("all[2]", all[1].data);
+      setState((prev) => ({
+        ...prev,
+        tweets: all[0].data,
+        users: all[1].data,
+      }));
+    });
+  }, []);
 
   return (
     <div className="App">
@@ -122,6 +140,7 @@ function App() {
         onChange={composeTweetChange}
         count={state.tweetCharCount}
         submitTweet={submitTweet}
+        value={state.composeText}
       />
       <TweetList tweets={state.tweets} />
     </div>

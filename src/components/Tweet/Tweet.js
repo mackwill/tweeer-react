@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { findDaysAgo } from "../../helpers/helpers";
+import { findDaysAgo, chrono } from "../../helpers/helpers";
 import "./Tweet.scss";
 
 // const useStyles = makeStyles({
@@ -24,6 +24,15 @@ export default function Tweet(props) {
   // const classes = useStyles();
   // const bull = <span className={classes.bullet}>•</span>;
 
+  const {
+    profile_picture_url,
+    first_name,
+    last_name,
+    username,
+    content,
+    tweet_date,
+  } = props;
+
   return (
     // <Card classame={classes.root}>
     //   <CardHeader
@@ -41,20 +50,20 @@ export default function Tweet(props) {
     <article className="tweet">
       <div className="tweet-header">
         <div className="tweet-header left">
-          <img src={props.user.avatars} />
-          <p>{props.user.name}</p>
+          <img src={profile_picture_url} />
+          <p>
+            {first_name} {last_name}
+          </p>
         </div>
         <div className="tweet-header right">
-          <p className="username">{props.user.handle}</p>
+          <p className="username">{username}</p>
         </div>
       </div>
       <form>
-        <p className="submitted-tweet">{props.content.text}</p>
+        <p className="submitted-tweet">{content}</p>
         <footer>
           <div className="tweet-footer footer-left">
-            <p className="date-of-tweet">
-              {findDaysAgo(props.created_at)} days ago
-            </p>
+            <p className="date-of-tweet">{chrono(tweet_date)}</p>
           </div>
           <div className="tweet-footer footer-right">
             <a href="#">

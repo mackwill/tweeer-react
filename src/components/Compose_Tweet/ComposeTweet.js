@@ -52,6 +52,7 @@ export default function ComposeTweet(props) {
               placeholder="What are you humming about?"
               onChange={props.onChange}
               fullWidth={true}
+              value={props.value}
             />
 
             <div id="header-footer" justify="space-between">

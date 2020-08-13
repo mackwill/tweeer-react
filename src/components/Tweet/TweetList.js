@@ -7,14 +7,7 @@ export default function TweetList(props) {
     <Grid container>
       <Grid item xs={11} s={10} md={9}>
         {props.tweets.map((tweet) => {
-          return (
-            <Tweet
-              key={tweet.id}
-              user={tweet.user}
-              content={tweet.content}
-              created_at={tweet.created_at}
-            />
-          );
+          return <Tweet key={tweet.id} {...tweet} />;
         })}
       </Grid>
     </Grid>
