@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
-import logo from "./logo.svg";
 import "./App.scss";
 import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
 import TweetList from "./components/Tweet/TweetList";
@@ -20,11 +19,12 @@ const user = {
 };
 
 function App() {
+  const maxTweetChars = 140;
   const [state, setState] = useState({
     tweets: [],
     users: [],
     composeText: "",
-    tweetCharCount: 140,
+    tweetCharCount: maxTweetChars,
     errMessage: "",
   });
 
@@ -34,14 +34,14 @@ function App() {
     setState((prev) => ({
       ...prev,
       composeText: newText,
-      tweetCharCount: 140 - newText.length,
+      tweetCharCount: maxTweetChars - newText.length,
     }));
   };
 
   const submitTweet = (e) => {
     e.preventDefault();
 
-    if (state.tweetCharCount === 140) {
+    if (state.tweetCharCount === maxTweetChars) {
       setState((prev) => ({
         ...prev,
         errMessage: "Your tweet is empty!",
@@ -73,6 +73,7 @@ function App() {
         composeText: "",
         tweets: newTweets,
         errMessage: "",
+        tweetCharCount: maxTweetChars,
       }));
     });
   };
