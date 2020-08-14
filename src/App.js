@@ -8,57 +8,6 @@ import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
 import TweetList from "./components/Tweet/TweetList";
 import axios from "axios";
 
-const tweetList = [
-  {
-    id: 1,
-    "user": {
-      "name": "Newton",
-      "avatars": "https://i.imgur.com/73hZDYK.png",
-      "handle": "@SirIsaac",
-    },
-    "content": {
-      "text":
-        "If I have seen further it is by standing on the shoulders of giants",
-    },
-    "created_at": 1461116232227,
-  },
-  {
-    id: 2,
-    "user": {
-      "name": "Descartes",
-      "avatars": "https://i.imgur.com/nlhLi3I.png",
-      "handle": "@rd",
-    },
-    "content": {
-      "text": "Je pense , donc je suis",
-    },
-    "created_at": 1461113959088,
-  },
-  {
-    id: 3,
-    "user": {
-      "name": "NicCage",
-      "avatars": "https://i.imgur.com/73hZDYK.png",
-      "handle": "@theCage",
-    },
-    "content": {
-      "text": "I am but a humble servant of the Cage",
-    },
-    "created_at": 1461895359088,
-  },
-  {
-    id: 4,
-    "user": {
-      "name": "AryaStark",
-      "avatars": "https://i.imgur.com/nlhLi3I.png",
-      "handle": "@theKnife",
-    },
-    "content": {
-      "text": "The Whitewalkers were a let down",
-    },
-    "created_at": 1541895806487,
-  },
-];
 const user = {
   id: 1,
   username: "nicolasCage",
@@ -69,12 +18,14 @@ const user = {
   avatar: "https://i.imgur.com/nlhLi3I.png",
   dateJoined: 1596832658,
 };
+
 function App() {
   const [state, setState] = useState({
     tweets: [],
     users: [],
     composeText: "",
     tweetCharCount: 140,
+    errMessage: "",
   });
 
   const composeTweetChange = function (e) {
@@ -89,6 +40,20 @@ function App() {
 
   const submitTweet = (e) => {
     e.preventDefault();
+
+    if (state.tweetCharCount === 140) {
+      setState((prev) => ({
+        ...prev,
+        errMessage: "Your tweet is empty!",
+      }));
+      return;
+    } else if (state.tweetCharCount <= 0) {
+      setState((prev) => ({
+        ...prev,
+        errMessage: "Your tweet is too long!",
+      }));
+      return;
+    }
 
     const newTweet = {
       id: state.tweets.length + 1,
@@ -107,6 +72,7 @@ function App() {
         ...prev,
         composeText: "",
         tweets: newTweets,
+        errMessage: "",
       }));
     });
   };
@@ -141,6 +107,7 @@ function App() {
         count={state.tweetCharCount}
         submitTweet={submitTweet}
         value={state.composeText}
+        errMessage={state.errMessage}
       />
       <TweetList tweets={state.tweets} />
     </div>

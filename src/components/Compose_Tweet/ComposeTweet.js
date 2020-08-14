@@ -46,6 +46,8 @@ export default function ComposeTweet(props) {
             mt={"1rem"}
             onSubmit={props.submitTweet}
           >
+            <p className="tweet_compose--error">{props.errMessage}</p>
+
             <TextField
               id="standard-basic"
               label="Tweet"
