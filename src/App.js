@@ -6,6 +6,7 @@ import "./App.scss";
 import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
 import TweetList from "./components/Tweet/TweetList";
 import axios from "axios";
+import LoginModal from "./components/Login/LoginModal";
 
 const user = {
   id: 1,
@@ -27,6 +28,12 @@ function App() {
     tweetCharCount: maxTweetChars,
     errMessage: "",
   });
+  const [open, setOpen] = useState(false);
+
+  const handleProfileMenuOpen = function (e) {
+    console.log("here");
+    setOpen(true);
+  };
 
   const composeTweetChange = function (e) {
     const newText = e.target.value;
@@ -101,7 +108,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar handleProfileMenuOpen={handleProfileMenuOpen} />
       <Header username={user.firstName} />
       <ComposeTweet
         onChange={composeTweetChange}
@@ -111,6 +118,7 @@ function App() {
         errMessage={state.errMessage}
       />
       <TweetList tweets={state.tweets} />
+      <LoginModal open={open} handleClose={() => setOpen(false)} />
     </div>
   );
 }

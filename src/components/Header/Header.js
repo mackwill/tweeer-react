@@ -21,9 +21,9 @@ export default function Header(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <header className={classes.root}>
       <Avatar alt="Remy Sharp" src={avatarImg} className={classes.large} />
       <h1>Hello, {props.username}!</h1>
-    </div>
+    </header>
   );
 }
