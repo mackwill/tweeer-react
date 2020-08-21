@@ -27,11 +27,40 @@ function App() {
     composeText: "",
     tweetCharCount: maxTweetChars,
     errMessage: "",
+    username: "",
+    password: "",
   });
   const [open, setOpen] = useState(false);
+  const saltRounds = 10;
+
+  const handleLoginChange = (e) => {
+    e.persist();
+    setState((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value.trim(),
+    }));
+  };
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    console.log("here");
+    return axios
+      .post("/api/login", {
+        username: state.username,
+        password: state.password,
+        users: state.users,
+      })
+      .then((data) => {
+        console.log("promise data: ", data);
+        setState((prev) => ({
+          ...prev,
+          currentUser: data,
+        }));
+        setOpen(false);
+      });
+  };
 
   const handleProfileMenuOpen = function (e) {
-    console.log("here");
     setOpen(true);
   };
 
@@ -118,7 +147,12 @@ function App() {
         errMessage={state.errMessage}
       />
       <TweetList tweets={state.tweets} />
-      <LoginModal open={open} handleClose={() => setOpen(false)} />
+      <LoginModal
+        open={open}
+        handleClose={() => setOpen(false)}
+        onChange={handleLoginChange}
+        onSubmit={handleLoginSubmit}
+      />
     </div>
   );
 }

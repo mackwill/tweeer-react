@@ -1,26 +1,13 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+import React from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default function LoginModal(props) {
-  const classes = useStyles();
-
   // const handleOpen = () => {
   //   setOpen(true);
   // };
@@ -31,27 +18,46 @@ export default function LoginModal(props) {
 
   return (
     <div>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
+      <Dialog
         open={props.open}
         onClose={props.handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+        aria-labelledby="form-dialog-title"
       >
-        <Fade in={props.open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">
-              react-transition-group animates me.
-            </p>
-          </div>
-        </Fade>
-      </Modal>
+        <form onSubmit={props.onSubmit}>
+          <DialogTitle id="form-dialog-title">
+            Login To Your Account!
+          </DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Username"
+              type="username"
+              name="username"
+              fullWidth
+              onChange={props.onChange}
+            />
+            <TextField
+              margin="dense"
+              id="name"
+              label="Password"
+              type="password"
+              name="password"
+              fullWidth
+              onChange={props.onChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={props.handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button type="submit" color="primary">
+              Subscribe
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </div>
   );
 }
