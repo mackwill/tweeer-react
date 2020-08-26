@@ -29,6 +29,7 @@ function App() {
     errMessage: "",
     username: "",
     password: "",
+    currentUser: undefined,
   });
   const [open, setOpen] = useState(false);
   const saltRounds = 10;
@@ -54,7 +55,7 @@ function App() {
         console.log("promise data: ", data);
         setState((prev) => ({
           ...prev,
-          currentUser: data,
+          currentUser: data.data,
         }));
         setOpen(false);
       });
@@ -130,7 +131,8 @@ function App() {
       setState((prev) => ({
         ...prev,
         tweets: all[0].data,
-        users: all[1].data,
+        users: all[1].data.users,
+        currentUser: all[1].data.currentUser,
       }));
     });
   }, []);
@@ -138,7 +140,7 @@ function App() {
   return (
     <div className="App">
       <Navbar handleProfileMenuOpen={handleProfileMenuOpen} />
-      <Header username={user.firstName} />
+      <Header currentUser={state.currentUser} />
       <ComposeTweet
         onChange={composeTweetChange}
         count={state.tweetCharCount}
