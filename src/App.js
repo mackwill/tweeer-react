@@ -20,7 +20,7 @@ function App() {
     password: "",
     currentUser: undefined,
   });
-  const [open, setOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const saltRounds = 10;
 
   const handleLoginChange = (e) => {
@@ -33,7 +33,6 @@ function App() {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    console.log("here");
     return axios
       .post("/api/login", {
         username: state.username,
@@ -46,12 +45,25 @@ function App() {
           ...prev,
           currentUser: data.data,
         }));
-        setOpen(false);
+        setLoginOpen(false);
       });
   };
 
   const handleProfileMenuOpen = function (e) {
-    setOpen(true);
+    setLoginOpen(true);
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    return axios
+      .post("/api/logout")
+      .then((data) =>
+        setState((prev) => ({
+          ...prev,
+          currentUser: undefined,
+        }))
+      )
+      .catch((err) => console.log("Err: ", err));
   };
 
   const composeTweetChange = function (e) {
@@ -68,7 +80,7 @@ function App() {
     e.preventDefault();
 
     if (!state.currentUser) {
-      setOpen(true);
+      setLoginOpen(true);
       return;
     }
 
@@ -135,6 +147,7 @@ function App() {
       <Navbar
         handleProfileMenuOpen={handleProfileMenuOpen}
         currentUser={state.currentUser}
+        handleLogout={handleLogout}
       />
       <Header currentUser={state.currentUser} />
       <ComposeTweet
@@ -147,8 +160,8 @@ function App() {
       />
       <TweetList tweets={state.tweets} />
       <LoginModal
-        open={open}
-        handleClose={() => setOpen(false)}
+        open={loginOpen}
+        handleClose={() => setLoginOpen(false)}
         onChange={handleLoginChange}
         onSubmit={handleLoginSubmit}
       />

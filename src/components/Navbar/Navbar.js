@@ -136,6 +136,7 @@ export default function Navbar(props) {
       <UserVisitorMobile
         currentUser={props.currentUser}
         handleProfileMenuOpen={props.handleProfileMenuOpen}
+        handleLogout={props.handleLogout}
       />
     </Menu>
   );

@@ -6,6 +6,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import IconButton from "@material-ui/core/IconButton";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 export default function UserVisitorMobile(props) {
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -39,6 +40,12 @@ export default function UserVisitorMobile(props) {
             <AccountCircle />
           </IconButton>
           <p>Profile</p>
+        </MenuItem>
+        <MenuItem onClick={props.handleLogout}>
+          <IconButton color="inherit">
+            <ExitToAppIcon />
+          </IconButton>
+          <p>Logout</p>
         </MenuItem>
       </Fragment>
     );
