@@ -8,17 +8,6 @@ import TweetList from "./components/Tweet/TweetList";
 import axios from "axios";
 import LoginModal from "./components/Login/LoginModal";
 
-const user = {
-  id: 1,
-  username: "nicolasCage",
-  firstName: "Nicolas",
-  lastName: "Cage",
-  email: "nicolasCage@gmail.com",
-  password: "password",
-  avatar: "https://i.imgur.com/nlhLi3I.png",
-  dateJoined: 1596832658,
-};
-
 function App() {
   const maxTweetChars = 140;
   const [state, setState] = useState({
@@ -143,7 +132,10 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar handleProfileMenuOpen={handleProfileMenuOpen} />
+      <Navbar
+        handleProfileMenuOpen={handleProfileMenuOpen}
+        currentUser={state.currentUser}
+      />
       <Header currentUser={state.currentUser} />
       <ComposeTweet
         onChange={composeTweetChange}
