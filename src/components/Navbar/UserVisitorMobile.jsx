@@ -7,6 +7,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 export default function UserVisitorMobile(props) {
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -37,12 +38,17 @@ export default function UserVisitorMobile(props) {
             aria-haspopup="true"
             color="inherit"
           >
-            <AccountCircle />
+            <PersonAddIcon />
           </IconButton>
           <p>Profile</p>
         </MenuItem>
         <MenuItem onClick={props.handleLogout}>
-          <IconButton color="inherit">
+          <IconButton
+            aria-label="logout of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
             <ExitToAppIcon />
           </IconButton>
           <p>Logout</p>
@@ -52,6 +58,17 @@ export default function UserVisitorMobile(props) {
   } else {
     return (
       <Fragment>
+        <MenuItem onClick={props.handleRegisterMenuOpen}>
+          <IconButton
+            aria-label="register new user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <PersonAddIcon />
+          </IconButton>
+          <p>Sign Up</p>
+        </MenuItem>
         <MenuItem onClick={props.handleProfileMenuOpen}>
           <IconButton
             aria-label="account of current user"

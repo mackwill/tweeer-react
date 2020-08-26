@@ -5,6 +5,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import IconButton from "@material-ui/core/IconButton";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 export default function UserVisitor(props) {
   const menuId = "primary-search-account-menu";
@@ -37,6 +38,16 @@ export default function UserVisitor(props) {
   } else {
     return (
       <Fragment>
+        <MenuItem onClick={props.handleRegisterMenuOpen}>
+          <IconButton
+            aria-label="register new user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <PersonAddIcon />
+          </IconButton>
+        </MenuItem>
         <MenuItem onClick={props.handleProfileMenuOpen}>
           <IconButton
             aria-label="account of current user"
@@ -46,7 +57,6 @@ export default function UserVisitor(props) {
           >
             <AccountCircle />
           </IconButton>
-          <p>Login</p>
         </MenuItem>
       </Fragment>
     );
