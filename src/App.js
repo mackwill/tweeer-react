@@ -78,6 +78,11 @@ function App() {
   const submitTweet = (e) => {
     e.preventDefault();
 
+    if (!state.currentUser) {
+      setOpen(true);
+      return;
+    }
+
     if (state.tweetCharCount === maxTweetChars) {
       setState((prev) => ({
         ...prev,
@@ -93,12 +98,11 @@ function App() {
     }
 
     const newTweet = {
-      id: state.tweets.length + 1,
-      first_name: user.firstName,
-      last_name: user.lastName,
-      profile_picture_url: user.avatar,
-      user_id: user.id,
-      username: user.username,
+      first_name: state.currentUser.first_name,
+      last_name: state.currentUser.last_name,
+      profile_picture_url: state.currentUser.profile_picture_url,
+      user_id: state.currentUser.id,
+      username: state.currentUser.username,
       content: state.composeText,
       created_at: new Date(),
     };
@@ -147,6 +151,7 @@ function App() {
         submitTweet={submitTweet}
         value={state.composeText}
         errMessage={state.errMessage}
+        currentUser={state.currentUser}
       />
       <TweetList tweets={state.tweets} />
       <LoginModal

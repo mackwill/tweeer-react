@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "../Button";
 import Box from "@material-ui/core/Box";
+import Alert from "@material-ui/lab/Alert";
 
 import "./ComposeTweet.scss";
 
