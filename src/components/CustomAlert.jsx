@@ -5,10 +5,11 @@ import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    width: "80%",
     "& > * + *": {
       marginTop: theme.spacing(2),
     },
+    margin: "auto",
   },
 }));
 export default function CustomAlert(props) {
