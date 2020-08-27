@@ -23,6 +23,7 @@ function App() {
     firstName: "",
     lastName: "",
     passwordConfirmation: "",
+    errTweet: null,
   });
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -141,10 +142,24 @@ function App() {
         setState((prev) => ({
           ...prev,
           currentUser: data.data,
+          errMessage: null,
         }));
         setLoginOpen(false);
       })
-      .catch((err) => console.log("err: ", err));
+      .catch((err) => {
+        setState((prev) => ({
+          ...prev,
+          errMessage: "The username or password you have entered is incorrect",
+        }));
+      });
+  };
+
+  const handleLoginClose = (e) => {
+    setLoginOpen(false);
+    setState((prev) => ({
+      ...prev,
+      errMessage: null,
+    }));
   };
 
   const handleRegisterMenuOpen = (e) => {
@@ -189,13 +204,13 @@ function App() {
     if (state.tweetCharCount === maxTweetChars) {
       setState((prev) => ({
         ...prev,
-        errMessage: "Your tweet is empty!",
+        errTweet: "Your tweet is empty!",
       }));
       return;
     } else if (state.tweetCharCount <= 0) {
       setState((prev) => ({
         ...prev,
-        errMessage: "Your tweet is too long!",
+        errTweet: "Your tweet is too long!",
       }));
       return;
     }
@@ -258,15 +273,16 @@ function App() {
         count={state.tweetCharCount}
         submitTweet={submitTweet}
         value={state.composeText}
-        errMessage={state.errMessage}
+        errMessage={state.errTweet}
         currentUser={state.currentUser}
       />
       <TweetList tweets={state.tweets} />
       <LoginModal
         open={loginOpen}
-        handleClose={() => setLoginOpen(false)}
+        handleClose={handleLoginClose}
         onChange={handleLoginChange}
         onSubmit={handleLoginSubmit}
+        errMessage={state.errMessage}
       />
       <Register
         open={registerOpen}
