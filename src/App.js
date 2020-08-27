@@ -143,7 +143,8 @@ function App() {
           currentUser: data.data,
         }));
         setLoginOpen(false);
-      });
+      })
+      .catch((err) => console.log("err: ", err));
   };
 
   const handleRegisterMenuOpen = (e) => {

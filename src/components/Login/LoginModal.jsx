@@ -6,6 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import CustomAlert from "../CustomAlert";
 
 export default function LoginModal(props) {
   // const handleOpen = () => {
@@ -48,12 +49,13 @@ export default function LoginModal(props) {
               onChange={props.onChange}
             />
           </DialogContent>
+          <CustomAlert errMessage={props.errMessage} />
           <DialogActions>
             <Button onClick={props.handleClose} color="primary">
               Cancel
             </Button>
             <Button type="submit" color="primary">
-              Subscribe
+              Login
             </Button>
           </DialogActions>
         </form>
