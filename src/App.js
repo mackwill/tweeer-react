@@ -16,7 +16,7 @@ function App() {
     users: [],
     composeText: "",
     tweetCharCount: maxTweetChars,
-    errMessage: "",
+    errMessage: null,
     username: "",
     password: "",
     currentUser: undefined,
@@ -44,6 +44,15 @@ function App() {
     }));
   };
 
+  const handleRegistrationClose = (e) => {
+    setState((prev) => ({
+      ...prev,
+      errMessage: null,
+    }));
+
+    setRegisterOpen(false);
+  };
+
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
 
@@ -55,18 +64,45 @@ function App() {
       return user.username === state.username;
     });
 
+    if (
+      !state.firstName ||
+      !state.lastName ||
+      !state.email ||
+      !state.username ||
+      !state.password ||
+      !state.passwordConfirmation
+    ) {
+      setState((prev) => ({
+        ...prev,
+        errMessage: "Please fill out all fields",
+      }));
+      return;
+    }
+
     if (state.password !== state.passwordConfirmation) {
-      console.log("Passwords do not match!");
+      console.log("Passwords do not match");
+      setState((prev) => ({
+        ...prev,
+        errMessage: "Passwords do not match",
+      }));
       return;
     }
 
     if (doesEmailExist.length > 0) {
       console.log("That email already exists");
+      setState((prev) => ({
+        ...prev,
+        errMessage: "That email already exists",
+      }));
       return;
     }
 
     if (doesUsernameExist.length > 0) {
       console.log("That username already exists");
+      setState((prev) => ({
+        ...prev,
+        errMessage: "That username already exists",
+      }));
       return;
     }
 
@@ -233,9 +269,10 @@ function App() {
       />
       <Register
         open={registerOpen}
-        handleClose={() => setRegisterOpen(false)}
+        handleClose={handleRegistrationClose}
         onChange={handleRegisterChange}
         onSubmit={handleRegisterSubmit}
+        errMessage={state.errMessage}
       />
     </div>
   );
