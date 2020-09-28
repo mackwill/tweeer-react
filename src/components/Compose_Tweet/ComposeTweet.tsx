@@ -1,20 +1,9 @@
-import React from "react";
+import React, { ReactElement, FormEvent, ChangeEvent } from "react";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
 import Button from "../Button";
-import Box from "@material-ui/core/Box";
-import Alert from "@material-ui/lab/Alert";
+import { Box, TextField, Grid, Theme, createStyles } from "@material-ui/core";
 
 import "./ComposeTweet.scss";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
-}));
 
 const theme = createMuiTheme({
   palette: {
@@ -33,8 +22,29 @@ const theme = createMuiTheme({
   },
 });
 
-export default function ComposeTweet(props) {
-  const classes = useStyles();
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      "& > *": {
+        margin: theme.spacing(1),
+      },
+    },
+    spaceBetween: {
+      justifyContent: "space-between",
+    },
+  })
+);
+
+interface IProps {
+  submitTweet: (e: FormEvent<HTMLFormElement>) => void;
+  onChange: (e: ChangeEvent) => void;
+  errMessage: string;
+  value: string;
+  count: number;
+}
+
+const ComposeTweet = (props: IProps): ReactElement => {
+  const classes = useStyles(theme);
 
   return (
     <Grid className="grid-container" container>
@@ -44,7 +54,6 @@ export default function ComposeTweet(props) {
             className={classes.root}
             noValidate
             autoComplete="off"
-            mt={"1rem"}
             onSubmit={props.submitTweet}
           >
             <p className="tweet_compose--error">{props.errMessage}</p>
@@ -58,17 +67,23 @@ export default function ComposeTweet(props) {
               value={props.value}
             />
 
-            <div id="header-footer" justify="space-between">
+            <Box
+              id="header-footer"
+              component="div"
+              className={classes.spaceBetween}
+            >
               <div id="header-footer-left">
                 <Button btnType={"submit"} message={"Tweet"} />
               </div>
               <div id="header-footer-right">
                 <p>{props.count}</p>
               </div>
-            </div>
+            </Box>
           </form>
         </Box>
       </Grid>
     </Grid>
   );
-}
+};
+
+export default ComposeTweet;
