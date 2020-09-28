@@ -19,19 +19,24 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Header = () => {
+interface IProps {
+  username: string;
+}
+
+const Header = (props: IProps): ReactElement => {
   const classes = useStyles();
 
-  let userFirstName = "Visitor";
+  console.log("username: ", props.username);
+  let userOrVisitor: string = "Visitor";
 
-  // if (props.currentUser !== undefined) {
-  //   userFirstName = props.currentUser.first_name;
-  // }
+  if (props.username !== "") {
+    userOrVisitor = props.username;
+  }
 
   return (
     <header className={classes.root}>
       <Avatar alt="Remy Sharp" src={avatarImg} className={classes.large} />
-      <h1>Hello, {userFirstName}!</h1>
+      <h1>Hello, {userOrVisitor}!</h1>
     </header>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Navbar from "./components/Navbar/Navbar";
-import Header from "./components/Header/Header";
+import Header from "./components/Header/Header.tsx";
 import "./App.scss";
 // import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
 import ComposeTweet from "./components/Compose_Tweet/ComposeTweet.tsx";
@@ -19,8 +19,8 @@ function App() {
     errMessage: "",
     username: "",
     password: "",
-    currentUser: undefined,
   });
+  const [currentUser, setCurrentUser] = useState(null);
   const [loginOpen, setLoginOpen] = useState(false);
   const saltRounds = 10;
 
@@ -80,7 +80,7 @@ function App() {
   const submitTweet = (e) => {
     e.preventDefault();
 
-    if (!state.currentUser) {
+    if (!currentUser) {
       setLoginOpen(true);
       return;
     }
@@ -100,11 +100,11 @@ function App() {
     }
 
     const newTweet = {
-      first_name: state.currentUser.first_name,
-      last_name: state.currentUser.last_name,
-      profile_picture_url: state.currentUser.profile_picture_url,
-      user_id: state.currentUser.id,
-      username: state.currentUser.username,
+      first_name: currentUser.first_name,
+      last_name: currentUser.last_name,
+      profile_picture_url: currentUser.profile_picture_url,
+      user_id: currentUser.id,
+      username: currentUser.username,
       content: state.composeText,
       created_at: new Date(),
     };
@@ -134,10 +134,10 @@ function App() {
     ]).then((all) => {
       console.log("all[1]", all[0].data);
       console.log("all[2]", all[1].data);
+      setCurrentUser(all[1].data.data);
       setState((prev) => ({
         ...prev,
         tweets: all[0].data,
-        currentUser: all[1].data.data,
       }));
     });
   }, []);
@@ -146,17 +146,17 @@ function App() {
     <div className="App">
       <Navbar
         handleProfileMenuOpen={handleProfileMenuOpen}
-        currentUser={state.currentUser}
+        currentUser={currentUser}
         handleLogout={handleLogout}
       />
-      <Header currentUser={state.currentUser} />
+      <Header username={currentUser ? currentUser.firstName : null} />
       <ComposeTweet
         onChange={composeTweetChange}
         count={state.tweetCharCount}
         submitTweet={submitTweet}
         value={state.composeText}
         errMessage={state.errMessage}
-        currentUser={state.currentUser}
+        currentUser={currentUser}
       />
       <TweetList tweets={state.tweets} />
       <LoginModal
