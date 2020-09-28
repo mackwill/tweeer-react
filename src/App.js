@@ -137,8 +137,7 @@ function App() {
       setState((prev) => ({
         ...prev,
         tweets: all[0].data,
-        users: all[1].data.users,
-        currentUser: all[1].data.currentUser,
+        currentUser: all[1].data.data,
       }));
     });
   }, []);
