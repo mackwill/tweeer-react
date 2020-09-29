@@ -7,12 +7,11 @@ import TweetList from "./components/Tweet/TweetList.tsx";
 import axios from "axios";
 import Register from "./components/Register/Register.tsx";
 import Login from "./components/Login/Login";
+import useApplicationData from "./hooks/useApplicationData";
 
 function App() {
   const maxTweetChars = 140;
   const [state, setState] = useState({
-    tweets: [],
-    users: [],
     composeText: "",
     tweetCharCount: maxTweetChars,
     errMessage: null,
@@ -23,10 +22,12 @@ function App() {
     passwordConfirmation: "",
     errTweet: null,
   });
-  const [currentUser, setCurrentUser] = useState(null);
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const saltRounds = 10;
+
+  const { newState, submitLoginData } = useApplicationData();
+  const { currentUser, tweets } = newState;
 
   const handleLoginChange = (e) => {
     e.persist();
@@ -128,32 +129,32 @@ function App() {
     });
   };
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    return axios
-      .post("/api/login", {
-        username: state.username,
-        password: state.password,
-        users: state.users,
-      })
-      .then((data) => {
-        console.log("promise data: ", data);
-        setState((prev) => ({
-          ...prev,
-          currentUser: data.data,
-          errMessage: null,
-        }));
-        setLoginOpen(false);
-      })
-      .catch((err) => {
-        setState((prev) => ({
-          ...prev,
-          errMessage: "The username or password you have entered is incorrect",
-        }));
-      });
-  };
+  // const handleLoginSubmit = (e) => {
+  //   e.preventDefault();
+  // return axios
+  //   .post("/api/login", {
+  //     username: state.username,
+  //     password: state.password,
+  //     users: state.users,
+  //   })
+  //   .then((data) => {
+  //     console.log("promise data: ", data);
+  //     setState((prev) => ({
+  //       ...prev,
+  //       currentUser: data.data,
+  //       errMessage: null,
+  //     }));
+  //     setLoginOpen(false);
+  //   })
+  //   .catch((err) => {
+  //     setState((prev) => ({
+  //       ...prev,
+  //       errMessage: "The username or password you have entered is incorrect",
+  //     }));
+  //   });
+  // };
 
-  const handleLoginClose = (e) => {
+  const handleLoginClose = () => {
     setLoginOpen(false);
     setState((prev) => ({
       ...prev,
@@ -223,13 +224,14 @@ function App() {
       content: state.composeText,
       created_at: new Date(),
     };
-    const newTweets = [newTweet, ...state.tweets];
+    // const newTweets = [newTweet, ...state.tweets];
+    const newTweets = [newTweet, ...tweets];
 
     return axios.put("/api/tweets", newTweet).then((res) => {
       setState((prev) => ({
         ...prev,
         composeText: "",
-        tweets: newTweets,
+        // tweets: newTweets,
         errMessage: "",
         tweetCharCount: maxTweetChars,
       }));
@@ -241,21 +243,6 @@ function App() {
       alert("YOU OVER");
     }
   }, [state.composeText]);
-
-  useEffect(() => {
-    return axios.get("/api/tweets").then((res) => {
-      setState((prev) => ({
-        ...prev,
-        tweets: res.data,
-      }));
-    });
-  }, []);
-
-  useEffect(() => {
-    return axios.get("/api/users").then((res) => {
-      setCurrentUser(res.data.data);
-    });
-  }, []);
 
   return (
     <div className="App">
@@ -274,12 +261,14 @@ function App() {
         errMessage={state.errMessage}
         currentUser={currentUser}
       />
-      <TweetList tweets={state.tweets} />
+      {/* <TweetList tweets={state.tweets} /> */}
+      <TweetList tweets={tweets} />
+
       <Login
         open={loginOpen}
         handleClose={handleLoginClose}
         onChange={handleLoginChange}
-        onSubmit={handleLoginSubmit}
+        submitLoginData={submitLoginData}
         errMessage={state.errMessage}
       />
       <Register

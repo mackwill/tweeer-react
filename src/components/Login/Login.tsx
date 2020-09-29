@@ -1,4 +1,10 @@
-import React, { ReactElement, ChangeEvent, FormEvent, MouseEvent } from "react";
+import React, {
+  ReactElement,
+  ChangeEvent,
+  FormEvent,
+  MouseEvent,
+  useState,
+} from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -8,12 +14,23 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 interface IProps {
   open: true | false;
-  handleClose: (e: MouseEvent) => void;
+  handleClose: () => void;
   onChange: (e: ChangeEvent) => void;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  submitLoginData: (username: string, password: string) => Promise<void>;
   errMessage: string;
 }
 const Login = (props: IProps): ReactElement => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { submitLoginData } = props;
+
+  const handleLoginSubmit = (e: FormEvent): void => {
+    e.preventDefault();
+    Promise.resolve(submitLoginData(username, password)).then(() =>
+      props.handleClose()
+    );
+  };
   return (
     <div>
       <Dialog
@@ -21,7 +38,7 @@ const Login = (props: IProps): ReactElement => {
         onClose={props.handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <form onSubmit={props.onSubmit}>
+        <form onSubmit={handleLoginSubmit}>
           <DialogTitle id="form-dialog-title">
             Login To Your Account!
           </DialogTitle>
@@ -34,7 +51,9 @@ const Login = (props: IProps): ReactElement => {
               type="username"
               name="username"
               fullWidth
-              onChange={props.onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setUsername(e.target.value)
+              }
             />
             <TextField
               margin="dense"
@@ -43,7 +62,9 @@ const Login = (props: IProps): ReactElement => {
               type="password"
               name="password"
               fullWidth
-              onChange={props.onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
             />
           </DialogContent>
           <DialogActions>
