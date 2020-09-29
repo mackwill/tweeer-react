@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar, createStyles, Theme } from "@material-ui/core";
 import avatarImg from "../../images/img-avatar-blank.jpg";
@@ -19,24 +19,27 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+type TUserName = string;
 interface IProps {
   username: string;
 }
 
 const Header = (props: IProps): ReactElement => {
+  const [username, setUserName] = useState<TUserName>("Visitor");
   const classes = useStyles();
 
   console.log("username: ", props.username);
-  let userOrVisitor: string = "Visitor";
 
-  if (props.username !== "") {
-    userOrVisitor = props.username;
-  }
+  useEffect(() => {
+    if (props.username) {
+      setUserName(props.username);
+    }
+  }, [props.username]);
 
   return (
     <header className={classes.root}>
       <Avatar alt="Remy Sharp" src={avatarImg} className={classes.large} />
-      <h1>Hello, {userOrVisitor}!</h1>
+      <h1>Hello, {username}!</h1>
     </header>
   );
 };
