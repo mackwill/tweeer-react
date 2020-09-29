@@ -80,6 +80,7 @@ interface IProps {
   handleProfileMenuOpen: (e: MouseEvent) => void;
   currentUser: object;
   handleLogout: (e: MouseEvent) => void;
+  handleRegisterMenuOpen: (e: MouseEvent) => void;
 }
 
 const Navbar = (props: IProps): ReactElement => {
@@ -139,6 +140,7 @@ const Navbar = (props: IProps): ReactElement => {
         currentUser={props.currentUser}
         handleProfileMenuOpen={props.handleProfileMenuOpen}
         handleLogout={props.handleLogout}
+        handleRegisterMenuOpen={props.handleRegisterMenuOpen}
       />
     </Menu>
   );
@@ -162,6 +164,7 @@ const Navbar = (props: IProps): ReactElement => {
           <UserVisitor
             currentUser={props.currentUser}
             handleProfileMenuOpen={props.handleProfileMenuOpen}
+            handleRegisterMenuOpen={props.handleRegisterMenuOpen}
           />
         </div>
         <div className={classes.sectionMobile}>
