@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  ChangeEvent,
-  FormEvent,
-  MouseEvent,
-  useState,
-} from "react";
+import React, { ReactElement, ChangeEvent, FormEvent, useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -23,11 +17,9 @@ const Login = (props: IProps): ReactElement => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { submitLoginData } = props;
-
   const handleLoginSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    Promise.resolve(submitLoginData(username, password)).then(() =>
+    Promise.resolve(props.submitLoginData(username, password)).then(() =>
       props.handleClose()
     );
   };

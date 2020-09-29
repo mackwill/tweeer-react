@@ -1,4 +1,10 @@
-import React, { FormEvent, MouseEvent, ChangeEvent } from "react";
+import React, {
+  FormEvent,
+  MouseEvent,
+  ChangeEvent,
+  ReactElement,
+  useState,
+} from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -11,10 +17,36 @@ interface IProps {
   open: true | false;
   handleClose: (e: MouseEvent) => void;
   onChange: (e: ChangeEvent) => void;
-  onSubmit: (e: FormEvent) => void;
+  submitRegisterData: (newUser: object) => Promise<void>;
   errMessage: string;
 }
-export default function Register(props: IProps) {
+const Register = (props: IProps): ReactElement => {
+  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleRegisterSubmit = (e: any) => {
+    e.preventDefault();
+    if (password !== passwordConfirmation) {
+      setErrorMessage("Your passwords do not match");
+      return;
+    }
+
+    return props
+      .submitRegisterData({
+        username,
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .then(() => props.handleClose);
+  };
+
   return (
     <div>
       <Dialog
@@ -22,12 +54,13 @@ export default function Register(props: IProps) {
         onClose={props.handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <form onSubmit={props.onSubmit}>
+        <form onSubmit={handleRegisterSubmit}>
           <DialogTitle id="form-dialog-title">
             Sign Up So You Can Start Tweeting!
           </DialogTitle>
           <DialogContent>
             <TextField
+              required
               autoFocus
               margin="dense"
               id="name"
@@ -35,52 +68,69 @@ export default function Register(props: IProps) {
               type="text"
               name="firstName"
               fullWidth
-              onChange={props.onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setFirstName(e.target.value)
+              }
             />
             <TextField
+              required
               margin="dense"
               id="name"
               label="Last Name"
               type="text"
               name="lastName"
               fullWidth
-              onChange={props.onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setLastName(e.target.value)
+              }
             />
             <TextField
+              required
               margin="dense"
               id="name"
               label="Email"
               type="email"
               name="email"
               fullWidth
-              onChange={props.onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setEmail(e.target.value)
+              }
             />
             <TextField
+              required
               margin="dense"
               id="name"
               label="Username"
               type="username"
               name="username"
               fullWidth
-              onChange={props.onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setUsername(e.target.value)
+              }
             />
             <TextField
+              required
               margin="dense"
               id="name"
               label="Password"
               type="password"
               name="password"
               fullWidth
-              onChange={props.onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
             />
             <TextField
+              required
               margin="dense"
               id="name"
               label="Confirm Password"
               type="password"
               name="passwordConfirmation"
               fullWidth
-              onChange={props.onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPasswordConfirmation(e.target.value)
+              }
             />
           </DialogContent>
           <CustomAlert errMessage={props.errMessage} />
@@ -97,4 +147,5 @@ export default function Register(props: IProps) {
       </Dialog>
     </div>
   );
-}
+};
+export default Register;

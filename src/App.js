@@ -26,7 +26,11 @@ function App() {
   const [registerOpen, setRegisterOpen] = useState(false);
   const saltRounds = 10;
 
-  const { newState, submitLoginData } = useApplicationData();
+  const {
+    newState,
+    submitLoginData,
+    submitRegisterData,
+  } = useApplicationData();
   const { currentUser, tweets } = newState;
 
   const handleLoginChange = (e) => {
@@ -128,31 +132,6 @@ function App() {
       setRegisterOpen(false);
     });
   };
-
-  // const handleLoginSubmit = (e) => {
-  //   e.preventDefault();
-  // return axios
-  //   .post("/api/login", {
-  //     username: state.username,
-  //     password: state.password,
-  //     users: state.users,
-  //   })
-  //   .then((data) => {
-  //     console.log("promise data: ", data);
-  //     setState((prev) => ({
-  //       ...prev,
-  //       currentUser: data.data,
-  //       errMessage: null,
-  //     }));
-  //     setLoginOpen(false);
-  //   })
-  //   .catch((err) => {
-  //     setState((prev) => ({
-  //       ...prev,
-  //       errMessage: "The username or password you have entered is incorrect",
-  //     }));
-  //   });
-  // };
 
   const handleLoginClose = () => {
     setLoginOpen(false);
@@ -275,7 +254,7 @@ function App() {
         open={registerOpen}
         handleClose={handleRegistrationClose}
         onChange={handleRegisterChange}
-        onSubmit={handleRegisterSubmit}
+        submitRegisterData={submitRegisterData}
         errMessage={state.errMessage}
       />
     </div>
