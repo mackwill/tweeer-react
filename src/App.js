@@ -243,17 +243,17 @@ function App() {
   }, [state.composeText]);
 
   useEffect(() => {
-    Promise.all([
-      Promise.resolve(axios.get("/api/tweets")),
-      Promise.resolve(axios.get("/api/users")),
-    ]).then((all) => {
-      console.log("all[1]", all[0].data);
-      console.log("all[2]", all[1].data);
-      setCurrentUser(all[1].data.data);
+    return axios.get("/api/tweets").then((res) => {
       setState((prev) => ({
         ...prev,
-        tweets: all[0].data,
+        tweets: res.data,
       }));
+    });
+  }, []);
+
+  useEffect(() => {
+    return axios.get("/api/users").then((res) => {
+      setCurrentUser(res.data.data);
     });
   }, []);
 
