@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar/Navbar.tsx";
 import Header from "./components/Header/Header.tsx";
 import "./App.scss";
 import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
-import TweetList from "./components/Tweet/TweetList";
+import TweetList from "./components/Tweet/TweetList.tsx";
 import axios from "axios";
 import Register from "./components/Register/Register.tsx";
 import Login from "./components/Login/Login";
