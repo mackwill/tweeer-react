@@ -5,7 +5,7 @@ import "./App.scss";
 import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
 import TweetList from "./components/Tweet/TweetList";
 import axios from "axios";
-import Register from "./components/Register/Register";
+import Register from "./components/Register/Register.tsx";
 import Login from "./components/Login/Login";
 
 function App() {
