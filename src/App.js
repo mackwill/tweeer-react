@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-
 import Navbar from "./components/Navbar/Navbar";
-import Header from "./components/Header/Header";
+import Header from "./components/Header/Header.tsx";
 import "./App.scss";
-// import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
-import ComposeTweet from "./components/Compose_Tweet/ComposeTweet.tsx";
+import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
 import TweetList from "./components/Tweet/TweetList";
 import axios from "axios";
-import LoginModal from "./components/Login/LoginModal";
 import Register from "./components/Register/Register";
+import Login from "./components/Login/Login";
 
 function App() {
   const maxTweetChars = 140;
@@ -20,12 +18,12 @@ function App() {
     errMessage: null,
     username: "",
     password: "",
-    currentUser: undefined,
     firstName: "",
     lastName: "",
     passwordConfirmation: "",
     errTweet: null,
   });
+  const [currentUser, setCurrentUser] = useState(null);
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const saltRounds = 10;
@@ -197,7 +195,7 @@ function App() {
   const submitTweet = (e) => {
     e.preventDefault();
 
-    if (!state.currentUser) {
+    if (!currentUser) {
       setLoginOpen(true);
       return;
     }
@@ -217,11 +215,11 @@ function App() {
     }
 
     const newTweet = {
-      first_name: state.currentUser.first_name,
-      last_name: state.currentUser.last_name,
-      profile_picture_url: state.currentUser.profile_picture_url,
-      user_id: state.currentUser.id,
-      username: state.currentUser.username,
+      first_name: currentUser.first_name,
+      last_name: currentUser.last_name,
+      profile_picture_url: currentUser.profile_picture_url,
+      user_id: currentUser.id,
+      username: currentUser.username,
       content: state.composeText,
       created_at: new Date(),
     };
@@ -251,11 +249,10 @@ function App() {
     ]).then((all) => {
       console.log("all[1]", all[0].data);
       console.log("all[2]", all[1].data);
+      setCurrentUser(all[1].data.data);
       setState((prev) => ({
         ...prev,
         tweets: all[0].data,
-        users: all[1].data.users,
-        currentUser: all[1].data.currentUser,
       }));
     });
   }, []);
@@ -264,21 +261,21 @@ function App() {
     <div className="App">
       <Navbar
         handleProfileMenuOpen={handleProfileMenuOpen}
-        currentUser={state.currentUser}
+        currentUser={currentUser}
         handleLogout={handleLogout}
         handleRegisterMenuOpen={handleRegisterMenuOpen}
       />
-      <Header currentUser={state.currentUser} />
+      <Header username={currentUser ? currentUser.firstName : null} />
       <ComposeTweet
         onChange={composeTweetChange}
         count={state.tweetCharCount}
         submitTweet={submitTweet}
         value={state.composeText}
-        errMessage={state.errTweet}
-        currentUser={state.currentUser}
+        errMessage={state.errMessage}
+        currentUser={currentUser}
       />
       <TweetList tweets={state.tweets} />
-      <LoginModal
+      <Login
         open={loginOpen}
         handleClose={handleLoginClose}
         onChange={handleLoginChange}
