@@ -1,7 +1,8 @@
-import React, { ReactElement, FormEvent, ChangeEvent } from "react";
+import React, { ReactElement, FormEvent, ChangeEvent, useState } from "react";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import Button from "../Button";
 import { Box, TextField, Grid, Theme, createStyles } from "@material-ui/core";
+import CustomAlert from "../CustomAlert";
 
 import "./ComposeTweet.scss";
 
@@ -36,15 +37,31 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IProps {
-  submitTweet: (e: FormEvent<HTMLFormElement>) => void;
-  onChange: (e: ChangeEvent) => void;
+  submitTweetData: (tweetContent: string, userId: number) => Promise<void>;
   errMessage: string;
-  value: string;
-  count: number;
+  userId: number;
+  setErrorMessage: (msg: string | null) => void;
 }
 
 const ComposeTweet = (props: IProps): ReactElement => {
   const classes = useStyles(theme);
+  const [tweetContent, setTweetContent] = useState("");
+  const MAX_TWEET_LENGTH = 140;
+
+  const { setErrorMessage, errMessage } = props;
+  const handleSubmitTweet = (e: FormEvent): void => {
+    e.preventDefault();
+    if (tweetContent.length === 0) {
+      setErrorMessage("You need to enter something in the tweet");
+      return;
+    } else if (tweetContent.length > 140) {
+      setErrorMessage("Your tweet is longer than 140 characters");
+      return;
+    }
+    setTweetContent("");
+    setErrorMessage(null);
+    props.submitTweetData(tweetContent, props.userId);
+  };
 
   return (
     <Grid className="grid-container" container>
@@ -54,17 +71,21 @@ const ComposeTweet = (props: IProps): ReactElement => {
             className={classes.root}
             noValidate
             autoComplete="off"
-            onSubmit={props.submitTweet}
+            onSubmit={handleSubmitTweet}
           >
-            <p className="tweet_compose--error">{props.errMessage}</p>
+            <Box mx={"auto"}>
+              {errMessage && <CustomAlert errMessage={errMessage} />}
+            </Box>
 
             <TextField
               id="standard-basic"
               label="Tweet"
               placeholder="What are you humming about?"
-              onChange={props.onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setTweetContent(e.target.value)
+              }
+              value={tweetContent}
               fullWidth={true}
-              value={props.value}
             />
 
             <Box
@@ -76,7 +97,7 @@ const ComposeTweet = (props: IProps): ReactElement => {
                 <Button btnType={"submit"} message={"Tweet"} />
               </div>
               <div id="header-footer-right">
-                <p>{props.count}</p>
+                <p>{MAX_TWEET_LENGTH - tweetContent.length}</p>
               </div>
             </Box>
           </form>

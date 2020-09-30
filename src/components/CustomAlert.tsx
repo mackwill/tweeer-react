@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import Box from "@material-ui/core/Box";
@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
   },
 }));
-export default function CustomAlert(props) {
+
+interface IProps {
+  errMessage: string | null;
+}
+const CustomAlert = (props: IProps): ReactElement => {
   const classes = useStyles();
 
   let errDisplay = "none";
@@ -24,4 +28,6 @@ export default function CustomAlert(props) {
       <Alert severity="error">{props.errMessage}</Alert>
     </Box>
   );
-}
+};
+
+export default CustomAlert;

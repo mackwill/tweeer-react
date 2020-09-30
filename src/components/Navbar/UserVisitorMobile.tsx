@@ -1,7 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, ReactElement, MouseEvent } from "react";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
-
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -9,7 +8,14 @@ import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
-export default function UserVisitorMobile(props) {
+interface IProps {
+  currentUser: object;
+  handleProfileMenuOpen: (e: MouseEvent<HTMLElement>) => void;
+  handleLogout: (e: MouseEvent) => void;
+  handleRegisterMenuOpen: () => void;
+}
+
+const UserVisitorMobile = (props: IProps): ReactElement => {
   const mobileMenuId = "primary-search-account-menu-mobile";
 
   if (props.currentUser) {
@@ -83,4 +89,6 @@ export default function UserVisitorMobile(props) {
       </Fragment>
     );
   }
-}
+};
+
+export default UserVisitorMobile;
