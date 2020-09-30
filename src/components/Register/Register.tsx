@@ -16,7 +16,6 @@ import CustomAlert from "../CustomAlert";
 interface IProps {
   open: true | false;
   handleClose: () => void;
-  onChange: (e: ChangeEvent) => void;
   submitRegisterData: (newUser: object) => Promise<void>;
   errMessage: string;
 }

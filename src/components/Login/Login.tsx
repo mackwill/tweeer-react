@@ -9,7 +9,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 interface IProps {
   open: true | false;
   handleClose: () => void;
-  onChange: (e: ChangeEvent) => void;
   submitLoginData: (username: string, password: string) => Promise<void>;
   errMessage: string;
 }

@@ -30,24 +30,9 @@ function App() {
     newState,
     submitLoginData,
     submitRegisterData,
+    submitTweetData,
   } = useApplicationData();
   const { currentUser, tweets } = newState;
-
-  const handleLoginChange = (e) => {
-    e.persist();
-    setState((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value.trim(),
-    }));
-  };
-
-  const handleRegisterChange = (e) => {
-    e.persist();
-    setState((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value.trim(),
-    }));
-  };
 
   const handleRegistrationClose = (e) => {
     setState((prev) => ({
@@ -87,67 +72,6 @@ function App() {
       .catch((err) => console.log("Err: ", err));
   };
 
-  const composeTweetChange = function (e) {
-    const newText = e.target.value;
-
-    setState((prev) => ({
-      ...prev,
-      composeText: newText,
-      tweetCharCount: maxTweetChars - newText.length,
-    }));
-  };
-
-  const submitTweet = (e) => {
-    e.preventDefault();
-
-    if (!currentUser) {
-      setLoginOpen(true);
-      return;
-    }
-
-    if (state.tweetCharCount === maxTweetChars) {
-      setState((prev) => ({
-        ...prev,
-        errTweet: "Your tweet is empty!",
-      }));
-      return;
-    } else if (state.tweetCharCount <= 0) {
-      setState((prev) => ({
-        ...prev,
-        errTweet: "Your tweet is too long!",
-      }));
-      return;
-    }
-
-    const newTweet = {
-      first_name: currentUser.first_name,
-      last_name: currentUser.last_name,
-      profile_picture_url: currentUser.profile_picture_url,
-      user_id: currentUser.id,
-      username: currentUser.username,
-      content: state.composeText,
-      created_at: new Date(),
-    };
-    // const newTweets = [newTweet, ...state.tweets];
-    const newTweets = [newTweet, ...tweets];
-
-    return axios.put("/api/tweets", newTweet).then((res) => {
-      setState((prev) => ({
-        ...prev,
-        composeText: "",
-        // tweets: newTweets,
-        errMessage: "",
-        tweetCharCount: maxTweetChars,
-      }));
-    });
-  };
-
-  useEffect(() => {
-    if (state.tweetCharCount <= 0) {
-      alert("YOU OVER");
-    }
-  }, [state.composeText]);
-
   return (
     <div className="App">
       <Navbar
@@ -157,28 +81,33 @@ function App() {
         handleRegisterMenuOpen={handleRegisterMenuOpen}
       />
       <Header username={currentUser ? currentUser.firstName : null} />
-      <ComposeTweet
+      {currentUser && (
+        <ComposeTweet
+          submitTweetData={submitTweetData}
+          errMessage={state.errMessage}
+          userId={currentUser.id}
+        />
+      )}
+      {/* <ComposeTweet
         onChange={composeTweetChange}
         count={state.tweetCharCount}
-        submitTweet={submitTweet}
+        submitTweetData={submitTweetData}
         value={state.composeText}
         errMessage={state.errMessage}
         currentUser={currentUser}
-      />
+      /> */}
       {/* <TweetList tweets={state.tweets} /> */}
       <TweetList tweets={tweets} />
 
       <Login
         open={loginOpen}
         handleClose={handleLoginClose}
-        onChange={handleLoginChange}
         submitLoginData={submitLoginData}
         errMessage={state.errMessage}
       />
       <Register
         open={registerOpen}
         handleClose={handleRegistrationClose}
-        onChange={handleRegisterChange}
         submitRegisterData={submitRegisterData}
         errMessage={state.errMessage}
       />

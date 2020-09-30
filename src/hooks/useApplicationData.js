@@ -80,7 +80,16 @@ const useApplicationData = () => {
     });
   };
 
-  return { newState, submitLoginData, submitRegisterData };
+  const submitTweetData = (tweetContent, userId) => {
+    return axios.put("/api/tweets", { tweetContent, userId }).then((res) => {
+      dispatch({
+        type: SET_TWEETS,
+        value: res.data,
+      });
+    });
+  };
+
+  return { newState, submitLoginData, submitRegisterData, submitTweetData };
 };
 
 export default useApplicationData;
