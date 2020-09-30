@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import Navbar from "./components/Navbar/Navbar.tsx";
-import Header from "./components/Header/Header.tsx";
-import "./App.scss";
+import React, { useState, FC, ReactElement } from "react";
+import Navbar from "./components/Navbar/Navbar";
+import Header from "./components/Header/Header";
 import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
-import TweetList from "./components/Tweet/TweetList.tsx";
-import axios from "axios";
-import Register from "./components/Register/Register.tsx";
+import TweetList from "./components/Tweet/TweetList";
+import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
-import useApplicationData from "./hooks/useApplicationData.ts";
+import useApplicationData from "./hooks/useApplicationData";
 
-function App() {
-  const [loginOpen, setLoginOpen] = useState(false);
-  const [registerOpen, setRegisterOpen] = useState(false);
+import "./App.scss";
+
+const App: FC = (): ReactElement => {
+  const [loginOpen, setLoginOpen] = useState<boolean>(false);
+  const [registerOpen, setRegisterOpen] = useState<boolean>(false);
   const saltRounds = 10;
 
   const {
@@ -22,23 +22,24 @@ function App() {
     submitLogout,
     setErrorMessage,
   } = useApplicationData();
+
   const { currentUser, tweets, errorMessage } = state;
 
-  const handleRegistrationClose = (e) => {
+  const handleRegistrationClose = (): void => {
     setRegisterOpen(false);
     setErrorMessage(null);
   };
 
-  const handleLoginClose = () => {
+  const handleLoginClose = (): void => {
     setLoginOpen(false);
     setErrorMessage(null);
   };
 
-  const handleRegisterMenuOpen = () => {
+  const handleRegisterMenuOpen = (): void => {
     setRegisterOpen(true);
   };
 
-  const handleProfileMenuOpen = function (e) {
+  const handleProfileMenuOpen = (): void => {
     setLoginOpen(true);
   };
 
@@ -73,6 +74,6 @@ function App() {
       />
     </div>
   );
-}
+};
 
 export default App;

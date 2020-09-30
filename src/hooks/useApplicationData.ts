@@ -30,7 +30,7 @@ const reducer = (state: object, action: IAction): object => {
   }
 };
 
-const useApplicationData = (): object => {
+const useApplicationData = (): any => {
   const [state, dispatch] = useReducer(reducer, {
     currentUser: null,
     tweets: [],
