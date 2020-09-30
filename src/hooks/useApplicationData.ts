@@ -13,16 +13,16 @@ interface IAction {
   value: TActionValue;
 }
 
-const reducer = (newState: object, action: IAction): object => {
+const reducer = (state: object, action: IAction): object => {
   switch (action.type) {
     case SET_TWEETS: {
-      return { ...newState, tweets: action.value };
+      return { ...state, tweets: action.value };
     }
     case SET_CURRENT_USER: {
-      return { ...newState, currentUser: action.value };
+      return { ...state, currentUser: action.value };
     }
     case SET_ERROR: {
-      return { ...newState, errorMessage: action.value };
+      return { ...state, errorMessage: action.value };
     }
     default: {
       return { msg: `Invalid action type: ${action.type}` };
@@ -31,7 +31,7 @@ const reducer = (newState: object, action: IAction): object => {
 };
 
 const useApplicationData = (): object => {
-  const [newState, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = useReducer(reducer, {
     currentUser: null,
     tweets: [],
     errorMessage: "",
@@ -133,7 +133,7 @@ const useApplicationData = (): object => {
   };
 
   return {
-    newState,
+    state,
     submitLoginData,
     submitRegisterData,
     submitTweetData,

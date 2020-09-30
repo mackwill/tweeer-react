@@ -10,23 +10,19 @@ import Login from "./components/Login/Login";
 import useApplicationData from "./hooks/useApplicationData.ts";
 
 function App() {
-  const [state, setState] = useState({
-    errMessage: null,
-    errTweet: null,
-  });
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const saltRounds = 10;
 
   const {
-    newState,
+    state,
     submitLoginData,
     submitRegisterData,
     submitTweetData,
     submitLogout,
     setErrorMessage,
   } = useApplicationData();
-  const { currentUser, tweets, errorMessage } = newState;
+  const { currentUser, tweets, errorMessage } = state;
 
   const handleRegistrationClose = (e) => {
     setRegisterOpen(false);
