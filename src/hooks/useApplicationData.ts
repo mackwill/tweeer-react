@@ -73,7 +73,7 @@ const useApplicationData = (): object => {
         console.log("response: ", res);
         dispatch({
           type: SET_CURRENT_USER,
-          value: res.data,
+          value: res.data.user,
         });
       })
       .catch((error) => {
