@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface IProps {
   handleProfileMenuOpen: () => void;
   currentUser: object;
-  handleLogout: (e: MouseEvent) => void;
+  submitLogout: () => void;
   handleRegisterMenuOpen: () => void;
 }
 
@@ -109,6 +109,10 @@ const Navbar = (props: IProps): ReactElement => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogout = (e: MouseEvent): void => {
+    e.preventDefault();
+    props.submitLogout();
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -142,7 +146,7 @@ const Navbar = (props: IProps): ReactElement => {
           props.handleProfileMenuOpen();
           handleMobileMenuClose();
         }}
-        handleLogout={props.handleLogout}
+        handleLogout={handleLogout}
         handleRegisterMenuOpen={() => {
           props.handleRegisterMenuOpen();
           handleMobileMenuClose();
@@ -171,6 +175,7 @@ const Navbar = (props: IProps): ReactElement => {
             currentUser={props.currentUser}
             handleProfileMenuOpen={props.handleProfileMenuOpen}
             handleRegisterMenuOpen={props.handleRegisterMenuOpen}
+            handleLogout={handleLogout}
           />
         </div>
         <div className={classes.sectionMobile}>

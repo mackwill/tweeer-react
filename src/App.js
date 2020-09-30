@@ -10,16 +10,8 @@ import Login from "./components/Login/Login";
 import useApplicationData from "./hooks/useApplicationData.ts";
 
 function App() {
-  const maxTweetChars = 140;
   const [state, setState] = useState({
-    composeText: "",
-    tweetCharCount: maxTweetChars,
     errMessage: null,
-    username: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    passwordConfirmation: "",
     errTweet: null,
   });
   const [loginOpen, setLoginOpen] = useState(false);
@@ -31,6 +23,7 @@ function App() {
     submitLoginData,
     submitRegisterData,
     submitTweetData,
+    submitLogout,
   } = useApplicationData();
   const { currentUser, tweets } = newState;
 
@@ -59,25 +52,25 @@ function App() {
     setLoginOpen(true);
   };
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    return axios
-      .post("/api/logout")
-      .then((data) =>
-        setState((prev) => ({
-          ...prev,
-          currentUser: undefined,
-        }))
-      )
-      .catch((err) => console.log("Err: ", err));
-  };
+  // const handleLogout = (e) => {
+  //   e.preventDefault();
+  //   return axios
+  //     .post("/api/logout")
+  //     .then((data) =>
+  //       setState((prev) => ({
+  //         ...prev,
+  //         currentUser: undefined,
+  //       }))
+  //     )
+  //     .catch((err) => console.log("Err: ", err));
+  // };
 
   return (
     <div className="App">
       <Navbar
         handleProfileMenuOpen={handleProfileMenuOpen}
         currentUser={currentUser}
-        handleLogout={handleLogout}
+        submitLogout={submitLogout}
         handleRegisterMenuOpen={handleRegisterMenuOpen}
       />
       <Header username={currentUser ? currentUser.firstName : null} />

@@ -6,7 +6,7 @@ const SET_CURRENT_USER = "SET_CURRENT_USER";
 const SET_ERROR = "SET_ERROR";
 
 type TActionType = string;
-type TActionValue = object | string;
+type TActionValue = object | string | null;
 
 interface IAction {
   type: TActionType;
@@ -119,7 +119,22 @@ const useApplicationData = (): object => {
     });
   };
 
-  return { newState, submitLoginData, submitRegisterData, submitTweetData };
+  const submitLogout = () => {
+    return axios.post("/api/logout").then(() => {
+      dispatch({
+        type: SET_CURRENT_USER,
+        value: null,
+      });
+    });
+  };
+
+  return {
+    newState,
+    submitLoginData,
+    submitRegisterData,
+    submitTweetData,
+    submitLogout,
+  };
 };
 
 export default useApplicationData;
