@@ -67,42 +67,6 @@ const useApplicationData = () => {
   };
 
   const submitRegisterData = (newUser) => {
-    const { firstName, lastName, email, username, password } = newUser;
-    // const doesEmailExist = state.users.filter((user) => {
-    //   return user.email === state.email;
-    // });
-
-    // const doesUsernameExist = state.users.filter((user) => {
-    //   return user.username === state.username;
-    // });
-
-    // if (password !== passwordConfirmation) {
-    //   console.log("Passwords do not match");
-    //   dispatch({
-    //     type: SET_ERROR,
-    //     value: "Passwords do not match",
-    //   });
-    //   return;
-    // }
-
-    // if (doesEmailExist.length > 0) {
-    //   console.log("That email already exists");
-    //   setState((prev) => ({
-    //     ...prev,
-    //     errMessage: "That email already exists",
-    //   }));
-    //   return;
-    // }
-
-    // if (doesUsernameExist.length > 0) {
-    //   console.log("That username already exists");
-    //   setState((prev) => ({
-    //     ...prev,
-    //     errMessage: "That username already exists",
-    //   }));
-    //   return;
-    // }
-
     const newUserObj = {
       ...newUser,
       profilePictureUrl: "https://i.imgur.com/nlhLi3I.png",

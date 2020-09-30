@@ -50,6 +50,17 @@ export default function UserVisitor(props: IProps) {
           <PersonAddIcon />
         </IconButton>
       </MenuItem>
+      <MenuItem onClick={props.handleProfileMenuOpen}>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Login</p>
+      </MenuItem>
     </Fragment>
   );
 }

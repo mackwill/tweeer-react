@@ -77,10 +77,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface IProps {
-  handleProfileMenuOpen: (e: MouseEvent) => void;
+  handleProfileMenuOpen: () => void;
   currentUser: object;
   handleLogout: (e: MouseEvent) => void;
-  handleRegisterMenuOpen: (e: MouseEvent) => void;
+  handleRegisterMenuOpen: () => void;
 }
 
 const Navbar = (props: IProps): ReactElement => {
@@ -138,9 +138,15 @@ const Navbar = (props: IProps): ReactElement => {
     >
       <UserVisitorMobile
         currentUser={props.currentUser}
-        handleProfileMenuOpen={props.handleProfileMenuOpen}
+        handleProfileMenuOpen={() => {
+          props.handleProfileMenuOpen();
+          handleMobileMenuClose();
+        }}
         handleLogout={props.handleLogout}
-        handleRegisterMenuOpen={props.handleRegisterMenuOpen}
+        handleRegisterMenuOpen={() => {
+          props.handleRegisterMenuOpen();
+          handleMobileMenuClose();
+        }}
       />
     </Menu>
   );

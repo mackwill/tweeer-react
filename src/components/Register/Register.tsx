@@ -15,7 +15,7 @@ import CustomAlert from "../CustomAlert";
 
 interface IProps {
   open: true | false;
-  handleClose: (e: MouseEvent) => void;
+  handleClose: () => void;
   onChange: (e: ChangeEvent) => void;
   submitRegisterData: (newUser: object) => Promise<void>;
   errMessage: string;
@@ -44,7 +44,7 @@ const Register = (props: IProps): ReactElement => {
         email,
         password,
       })
-      .then(() => props.handleClose);
+      .then(() => props.handleClose());
   };
 
   return (

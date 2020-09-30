@@ -58,81 +58,6 @@ function App() {
     setRegisterOpen(false);
   };
 
-  const handleRegisterSubmit = (e) => {
-    e.preventDefault();
-
-    const doesEmailExist = state.users.filter((user) => {
-      return user.email === state.email;
-    });
-
-    const doesUsernameExist = state.users.filter((user) => {
-      return user.username === state.username;
-    });
-
-    if (
-      !state.firstName ||
-      !state.lastName ||
-      !state.email ||
-      !state.username ||
-      !state.password ||
-      !state.passwordConfirmation
-    ) {
-      setState((prev) => ({
-        ...prev,
-        errMessage: "Please fill out all fields",
-      }));
-      return;
-    }
-
-    if (state.password !== state.passwordConfirmation) {
-      console.log("Passwords do not match");
-      setState((prev) => ({
-        ...prev,
-        errMessage: "Passwords do not match",
-      }));
-      return;
-    }
-
-    if (doesEmailExist.length > 0) {
-      console.log("That email already exists");
-      setState((prev) => ({
-        ...prev,
-        errMessage: "That email already exists",
-      }));
-      return;
-    }
-
-    if (doesUsernameExist.length > 0) {
-      console.log("That username already exists");
-      setState((prev) => ({
-        ...prev,
-        errMessage: "That username already exists",
-      }));
-      return;
-    }
-
-    const newUser = {
-      username: state.username,
-      first_name: state.firstName,
-      last_name: state.lastName,
-      email: state.email,
-      password: state.password,
-      profile_picture_url: "https://i.imgur.com/nlhLi3I.png",
-    };
-
-    return axios.put("/api/register", newUser).then((data) => {
-      console.log("register data: ", data.data);
-      const newUsers = [...state.users, newUser];
-
-      setState((prev) => ({
-        ...prev,
-        users: newUsers,
-        currentUser: newUser,
-      }));
-      setRegisterOpen(false);
-    });
-  };
-
   const handleLoginClose = () => {
     setLoginOpen(false);
     setState((prev) => ({
@@ -141,7 +66,7 @@ function App() {
     }));
   };
 
-  const handleRegisterMenuOpen = (e) => {
+  const handleRegisterMenuOpen = () => {
     setRegisterOpen(true);
   };
 

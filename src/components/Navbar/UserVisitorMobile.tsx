@@ -12,7 +12,7 @@ interface IProps {
   currentUser: object;
   handleProfileMenuOpen: (e: MouseEvent<HTMLElement>) => void;
   handleLogout: (e: MouseEvent) => void;
-  handleRegisterMenuOpen: (e: MouseEvent) => void;
+  handleRegisterMenuOpen: () => void;
 }
 
 const UserVisitorMobile = (props: IProps): ReactElement => {
