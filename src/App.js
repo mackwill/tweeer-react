@@ -7,7 +7,7 @@ import TweetList from "./components/Tweet/TweetList.tsx";
 import axios from "axios";
 import Register from "./components/Register/Register.tsx";
 import Login from "./components/Login/Login";
-import useApplicationData from "./hooks/useApplicationData";
+import useApplicationData from "./hooks/useApplicationData.ts";
 
 function App() {
   const maxTweetChars = 140;
@@ -88,17 +88,7 @@ function App() {
           userId={currentUser.id}
         />
       )}
-      {/* <ComposeTweet
-        onChange={composeTweetChange}
-        count={state.tweetCharCount}
-        submitTweetData={submitTweetData}
-        value={state.composeText}
-        errMessage={state.errMessage}
-        currentUser={currentUser}
-      /> */}
-      {/* <TweetList tweets={state.tweets} /> */}
       <TweetList tweets={tweets} />
-
       <Login
         open={loginOpen}
         handleClose={handleLoginClose}
