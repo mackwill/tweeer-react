@@ -56,6 +56,7 @@ const App: FC = (): ReactElement => {
         <ComposeTweet
           submitTweetData={submitTweetData}
           errMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
           userId={currentUser.id}
         />
       )}
