@@ -24,24 +24,18 @@ function App() {
     submitRegisterData,
     submitTweetData,
     submitLogout,
+    setErrorMessage,
   } = useApplicationData();
-  const { currentUser, tweets } = newState;
+  const { currentUser, tweets, errorMessage } = newState;
 
   const handleRegistrationClose = (e) => {
-    setState((prev) => ({
-      ...prev,
-      errMessage: null,
-    }));
-
     setRegisterOpen(false);
+    setErrorMessage(null);
   };
 
   const handleLoginClose = () => {
     setLoginOpen(false);
-    setState((prev) => ({
-      ...prev,
-      errMessage: null,
-    }));
+    setErrorMessage(null);
   };
 
   const handleRegisterMenuOpen = () => {
@@ -51,19 +45,6 @@ function App() {
   const handleProfileMenuOpen = function (e) {
     setLoginOpen(true);
   };
-
-  // const handleLogout = (e) => {
-  //   e.preventDefault();
-  //   return axios
-  //     .post("/api/logout")
-  //     .then((data) =>
-  //       setState((prev) => ({
-  //         ...prev,
-  //         currentUser: undefined,
-  //       }))
-  //     )
-  //     .catch((err) => console.log("Err: ", err));
-  // };
 
   return (
     <div className="App">
@@ -77,7 +58,7 @@ function App() {
       {currentUser && (
         <ComposeTweet
           submitTweetData={submitTweetData}
-          errMessage={state.errMessage}
+          errMessage={errorMessage}
           userId={currentUser.id}
         />
       )}
@@ -86,13 +67,13 @@ function App() {
         open={loginOpen}
         handleClose={handleLoginClose}
         submitLoginData={submitLoginData}
-        errMessage={state.errMessage}
+        errMessage={errorMessage}
       />
       <Register
         open={registerOpen}
         handleClose={handleRegistrationClose}
         submitRegisterData={submitRegisterData}
-        errMessage={state.errMessage}
+        errMessage={errorMessage}
       />
     </div>
   );

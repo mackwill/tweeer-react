@@ -63,6 +63,13 @@ const useApplicationData = (): object => {
     getTweets();
   }, []);
 
+  const setErrorMessage = (msg: string | null): void => {
+    dispatch({
+      type: SET_ERROR,
+      value: msg,
+    });
+  };
+
   const submitLoginData = (username: string, password: string) => {
     return axios
       .post("/api/login", {
@@ -77,10 +84,7 @@ const useApplicationData = (): object => {
         });
       })
       .catch((error) => {
-        dispatch({
-          type: SET_ERROR,
-          value: "Invalid login data",
-        });
+        setErrorMessage(`Invalid login data: ${error}`);
         throw new Error();
       });
   };
@@ -134,6 +138,7 @@ const useApplicationData = (): object => {
     submitRegisterData,
     submitTweetData,
     submitLogout,
+    setErrorMessage,
   };
 };
 
