@@ -51,7 +51,7 @@ const App: FC = (): ReactElement => {
         submitLogout={submitLogout}
         handleRegisterMenuOpen={handleRegisterMenuOpen}
       />
-      <Header username={currentUser ? currentUser.firstName : null} />
+      <Header username={currentUser ? currentUser.username : null} />
       {currentUser && (
         <ComposeTweet
           submitTweetData={submitTweetData}

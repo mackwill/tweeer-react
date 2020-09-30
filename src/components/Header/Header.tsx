@@ -25,21 +25,12 @@ interface IProps {
 }
 
 const Header = (props: IProps): ReactElement => {
-  const [username, setUserName] = useState<TUserName>("Visitor");
   const classes = useStyles();
-
-  console.log("username: ", props.username);
-
-  useEffect(() => {
-    if (props.username) {
-      setUserName(props.username);
-    }
-  }, [props.username]);
 
   return (
     <header className={classes.root}>
       <Avatar alt="Remy Sharp" src={avatarImg} className={classes.large} />
-      <h1>Hello, {username}!</h1>
+      <h1>Hello, {props.username ? props.username : "Visitor"}!</h1>
     </header>
   );
 };
