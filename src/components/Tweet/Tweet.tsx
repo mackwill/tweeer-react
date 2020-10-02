@@ -101,6 +101,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // maxWidth: 345,
       height: "12rem",
       margin: "1rem 0 1rem 0",
+      border: "2px solid grey",
     },
     media: {
       height: 0,
@@ -153,7 +154,7 @@ const Tweet = (props: IProps): ReactElement => {
 
   const cardHeader = (
     <Typography variant="h5" className={classes.header}>
-      {props.username}
+      {props.firstName} {props.lastName}
     </Typography>
   );
 

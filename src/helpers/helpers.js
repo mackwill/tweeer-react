@@ -10,7 +10,7 @@ export const chrono = function (tweetDate) {
     result = `${Math.floor(
       diffInSeconds / (60 * 60 * 24 * 30 * 1000)
     )} months ago`;
-  } else if (diffInSeconds / (60 * 60 * 24 * 30 * 1000) >= 1) {
+  } else if (diffInSeconds / (60 * 60 * 24 * 1000) >= 1) {
     result = `${Math.floor(diffInSeconds / (60 * 60 * 24 * 1000))} days ago`;
   } else if (diffInSeconds / (60 * 60 * 1000) >= 1) {
     result = `${Math.floor(diffInSeconds / (60 * 60 * 1000))} hours ago`;
