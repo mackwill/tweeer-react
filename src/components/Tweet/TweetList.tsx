@@ -19,13 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface ITweet {
   id: number;
-  user_id: number;
+  userId: number;
   content: string;
-  tweet_date: string;
-  first_name: string;
-  last_name: string;
+  tweetDate: string;
+  firstName: string;
+  lastName: string;
   username: string;
-  profile_picture_url: string;
+  profilePictureUrl: string;
 }
 
 interface IProps {
@@ -37,10 +37,10 @@ const TweetList = (props: IProps): ReactElement => {
 
   return (
     <div className={classes.root}>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={11} md={9}>
           {props.tweets.map((tweet) => {
-            return <Tweet {...tweet} />;
+            return <Tweet key={tweet.id} {...tweet} />;
           })}
         </Grid>
       </Grid>
