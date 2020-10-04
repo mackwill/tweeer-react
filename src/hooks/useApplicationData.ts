@@ -132,6 +132,15 @@ const useApplicationData = (): any => {
     });
   };
 
+  const submitFavouriteTweet = (
+    userId: number,
+    tweetId: number
+  ): Promise<void> => {
+    return axios.put("/api/favourite", { tweetId, userId }).then((res) => {
+      console.log("res", res);
+    });
+  };
+
   return {
     state,
     submitLoginData,
@@ -139,6 +148,7 @@ const useApplicationData = (): any => {
     submitTweetData,
     submitLogout,
     setErrorMessage,
+    submitFavouriteTweet,
   };
 };
 

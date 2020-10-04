@@ -91,6 +91,7 @@ import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
+import RepeatIcon from "@material-ui/icons/Repeat";
 
 import Box from "@material-ui/core/Box";
 import { chrono } from "../../helpers/helpers";
@@ -147,6 +148,9 @@ interface IProps {
   lastName: string;
   username: string;
   profilePictureUrl: string;
+  tweetFavourites: number;
+  currentUserId: number;
+  submitFavouriteTweet: (userId: number, tweetId: number) => Promise<void>;
 }
 
 const Tweet = (props: IProps): ReactElement => {
@@ -157,6 +161,14 @@ const Tweet = (props: IProps): ReactElement => {
       {props.firstName} {props.lastName}
     </Typography>
   );
+
+  const favouriteTweet = (tweetId: number) => {
+    if (props.currentUserId && props.currentUserId !== props.userId) {
+      props.submitFavouriteTweet(props.currentUserId, tweetId);
+      return;
+    }
+    console.log("Please log in to favourite a tweet");
+  };
 
   return (
     <Card className={classes.root} raised>
@@ -172,11 +184,19 @@ const Tweet = (props: IProps): ReactElement => {
       </CardContent>
       <CardActions className={classes.cardActions} disableSpacing>
         <Box>
-          <IconButton aria-label="add to favorites">
+          <IconButton
+            aria-label="add to favorites"
+            onClick={() => favouriteTweet(props.id)}
+          >
+            <Typography>{props.tweetFavourites}</Typography>
             <FavoriteIcon />
           </IconButton>
+
           <IconButton aria-label="share">
             <ShareIcon />
+          </IconButton>
+          <IconButton aria-label="retweet">
+            <RepeatIcon />
           </IconButton>
         </Box>
         <Box>

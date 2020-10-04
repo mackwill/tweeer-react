@@ -21,6 +21,7 @@ const App: FC = (): ReactElement => {
     submitTweetData,
     submitLogout,
     setErrorMessage,
+    submitFavouriteTweet,
   } = useApplicationData();
 
   const { currentUser, tweets, errorMessage } = state;
@@ -60,7 +61,11 @@ const App: FC = (): ReactElement => {
           userId={currentUser.id}
         />
       )}
-      <TweetList tweets={tweets} />
+      <TweetList
+        tweets={tweets}
+        currentUser={currentUser}
+        submitFavouriteTweet={submitFavouriteTweet}
+      />
       <Login
         open={loginOpen}
         handleClose={handleLoginClose}

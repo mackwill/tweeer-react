@@ -26,10 +26,13 @@ interface ITweet {
   lastName: string;
   username: string;
   profilePictureUrl: string;
+  tweetFavourites: number;
 }
 
 interface IProps {
   tweets: ITweet[];
+  currentUser: any;
+  submitFavouriteTweet: (userId: number, tweetId: number) => Promise<void>;
 }
 
 const TweetList = (props: IProps): ReactElement => {
@@ -40,7 +43,14 @@ const TweetList = (props: IProps): ReactElement => {
       <Grid container spacing={2}>
         <Grid item xs={11} md={9}>
           {props.tweets.map((tweet) => {
-            return <Tweet key={tweet.id} {...tweet} />;
+            return (
+              <Tweet
+                key={tweet.id}
+                {...tweet}
+                currentUserId={props.currentUser ? props.currentUser.id : null}
+                submitFavouriteTweet={props.submitFavouriteTweet}
+              />
+            );
           })}
         </Grid>
       </Grid>
