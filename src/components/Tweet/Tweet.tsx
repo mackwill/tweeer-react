@@ -167,9 +167,7 @@ const Tweet = (props: IProps): ReactElement => {
   );
 
   const favouriteTweet = (tweetId: number) => {
-    if (props.currentUserId === props.userId) {
-      return;
-    } else if (props.currentUserId) {
+    if (props.currentUserId) {
       return props
         .submitFavouriteTweet(props.currentUserId, tweetId)
         .then((res: number) => setTweetFavouriteCount(res));
@@ -194,6 +192,7 @@ const Tweet = (props: IProps): ReactElement => {
           <IconButton
             aria-label="add to favorites"
             onClick={() => favouriteTweet(props.id)}
+            disabled={props.currentUserId === props.userId ? true : false}
           >
             <Typography>{tweetFavouriteCount}</Typography>
             <FavoriteIcon />
