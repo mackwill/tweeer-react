@@ -78,7 +78,7 @@
 
 // export default Tweet;
 
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -150,11 +150,15 @@ interface IProps {
   profilePictureUrl: string;
   tweetFavourites: number;
   currentUserId: number;
-  submitFavouriteTweet: (userId: number, tweetId: number) => Promise<void>;
+  submitFavouriteTweet: (userId: number, tweetId: number) => Promise<number>;
+  handleProfileMenuOpen: () => void;
 }
 
 const Tweet = (props: IProps): ReactElement => {
   const classes = useStyles();
+  const [tweetFavouriteCount, setTweetFavouriteCount] = useState(
+    props.tweetFavourites
+  );
 
   const cardHeader = (
     <Typography variant="h5" className={classes.header}>
@@ -163,11 +167,14 @@ const Tweet = (props: IProps): ReactElement => {
   );
 
   const favouriteTweet = (tweetId: number) => {
-    if (props.currentUserId && props.currentUserId !== props.userId) {
-      props.submitFavouriteTweet(props.currentUserId, tweetId);
+    if (props.currentUserId === props.userId) {
       return;
+    } else if (props.currentUserId) {
+      return props
+        .submitFavouriteTweet(props.currentUserId, tweetId)
+        .then((res: number) => setTweetFavouriteCount(res));
     }
-    console.log("Please log in to favourite a tweet");
+    props.handleProfileMenuOpen();
   };
 
   return (
@@ -188,7 +195,7 @@ const Tweet = (props: IProps): ReactElement => {
             aria-label="add to favorites"
             onClick={() => favouriteTweet(props.id)}
           >
-            <Typography>{props.tweetFavourites}</Typography>
+            <Typography>{tweetFavouriteCount}</Typography>
             <FavoriteIcon />
           </IconButton>
 

@@ -135,9 +135,9 @@ const useApplicationData = (): any => {
   const submitFavouriteTweet = (
     userId: number,
     tweetId: number
-  ): Promise<void> => {
+  ): Promise<number | void> => {
     return axios.put("/api/favourite", { tweetId, userId }).then((res) => {
-      console.log("res", res);
+      return res.data.count;
     });
   };
 

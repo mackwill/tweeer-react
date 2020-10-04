@@ -65,6 +65,7 @@ const App: FC = (): ReactElement => {
         tweets={tweets}
         currentUser={currentUser}
         submitFavouriteTweet={submitFavouriteTweet}
+        handleProfileMenuOpen={handleProfileMenuOpen}
       />
       <Login
         open={loginOpen}

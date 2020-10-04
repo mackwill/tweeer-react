@@ -32,7 +32,8 @@ interface ITweet {
 interface IProps {
   tweets: ITweet[];
   currentUser: any;
-  submitFavouriteTweet: (userId: number, tweetId: number) => Promise<void>;
+  submitFavouriteTweet: (userId: number, tweetId: number) => Promise<number>;
+  handleProfileMenuOpen: () => void;
 }
 
 const TweetList = (props: IProps): ReactElement => {
@@ -49,6 +50,7 @@ const TweetList = (props: IProps): ReactElement => {
                 {...tweet}
                 currentUserId={props.currentUser ? props.currentUser.id : null}
                 submitFavouriteTweet={props.submitFavouriteTweet}
+                handleProfileMenuOpen={props.handleProfileMenuOpen}
               />
             );
           })}
