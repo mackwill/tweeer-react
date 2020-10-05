@@ -7,15 +7,37 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import IconButton from "@material-ui/core/IconButton";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { Button, createStyles, makeStyles, Theme } from "@material-ui/core";
+import { Link, useLocation } from "react-router-dom";
+import "./Navbar.scss";
 
+type TCurrentUser = {
+  id: number;
+};
 interface IProps {
-  currentUser: object;
+  currentUser: TCurrentUser;
   handleRegisterMenuOpen: (e: MouseEvent) => void;
-  handleProfileMenuOpen: (e: MouseEvent) => void;
+  handleLoginOpen: (e: MouseEvent) => void;
   handleLogout: (e: MouseEvent) => void;
 }
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    button: {
+      marginLeft: "0.4rem",
+      marginRight: "0.4rem",
+      color: "#ffffff",
+      border: "2px solid white",
+      fontWeight: "bold",
+    },
+  })
+);
+
 export default function UserVisitor(props: IProps) {
-  const menuId = "primary-search-account-menu";
+  const classes = useStyles();
+  const location = useLocation();
+
+  const handlProfileOpen = (): void => {};
 
   return props.currentUser ? (
     <Fragment>
@@ -29,39 +51,44 @@ export default function UserVisitor(props: IProps) {
           <NotificationsIcon />
         </Badge>
       </IconButton>
-      <IconButton
-        aria-label="logout of current user"
-        aria-controls="primary-search-account-menu"
-        aria-haspopup="true"
-        color="inherit"
+      {location.pathname !== `/user/${props.currentUser.id}` && (
+        <Link to={`/user/${props.currentUser.id}`}>
+          <Button className={classes.button} variant="outlined">
+            Profile
+          </Button>
+        </Link>
+      )}
+      {location.pathname !== "/" && (
+        <Link to="/">
+          <Button className={classes.button} variant="outlined">
+            Home
+          </Button>
+        </Link>
+      )}
+      <Button
+        className={classes.button}
+        variant="outlined"
         onClick={props.handleLogout}
       >
-        <ExitToAppIcon />
-      </IconButton>
+        Logout
+      </Button>
     </Fragment>
   ) : (
     <Fragment>
-      <MenuItem onClick={props.handleRegisterMenuOpen}>
-        <IconButton
-          aria-label="register new user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <PersonAddIcon />
-        </IconButton>
-      </MenuItem>
-      <MenuItem onClick={props.handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Login</p>
-      </MenuItem>
+      <Button
+        className={classes.button}
+        variant="outlined"
+        onClick={props.handleRegisterMenuOpen}
+      >
+        Register
+      </Button>
+      <Button
+        variant="outlined"
+        onClick={props.handleLoginOpen}
+        className={classes.button}
+      >
+        Login
+      </Button>
     </Fragment>
   );
 }

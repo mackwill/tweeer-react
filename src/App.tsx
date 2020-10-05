@@ -43,32 +43,32 @@ const App: FC = (): ReactElement => {
     setRegisterOpen(true);
   };
 
-  const handleProfileMenuOpen = (): void => {
+  const handleLoginOpen = (): void => {
     setLoginOpen(true);
   };
 
   return (
     <div className="App">
-      <Navbar
-        handleProfileMenuOpen={handleProfileMenuOpen}
-        currentUser={currentUser}
-        submitLogout={submitLogout}
-        handleRegisterMenuOpen={handleRegisterMenuOpen}
-      />
-      <Header username={currentUser ? currentUser.username : null} />
-      <Login
-        open={loginOpen}
-        handleClose={handleLoginClose}
-        submitLoginData={submitLoginData}
-        errMessage={errorMessage}
-      />
-      <Register
-        open={registerOpen}
-        handleClose={handleRegistrationClose}
-        submitRegisterData={submitRegisterData}
-        errMessage={errorMessage}
-      />
       <Router>
+        <Navbar
+          handleLoginOpen={handleLoginOpen}
+          currentUser={currentUser}
+          submitLogout={submitLogout}
+          handleRegisterMenuOpen={handleRegisterMenuOpen}
+        />
+        <Header username={currentUser ? currentUser.username : null} />
+        <Login
+          open={loginOpen}
+          handleClose={handleLoginClose}
+          submitLoginData={submitLoginData}
+          errMessage={errorMessage}
+        />
+        <Register
+          open={registerOpen}
+          handleClose={handleRegistrationClose}
+          submitRegisterData={submitRegisterData}
+          errMessage={errorMessage}
+        />
         <Switch>
           {currentUser && (
             <Route path={`/user/${currentUser.id}`}>
@@ -81,7 +81,7 @@ const App: FC = (): ReactElement => {
               errorMessage={errorMessage}
               tweets={tweets}
               submitTweetData={submitTweetData}
-              handleProfileMenuOpen={handleProfileMenuOpen}
+              handleLoginOpen={handleLoginOpen}
               submitFavouriteTweet={submitFavouriteTweet}
               currentUser={currentUser}
               setErrorMessage={setErrorMessage}

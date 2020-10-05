@@ -11,10 +11,16 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1),
       },
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "15rem",
+      backgroundColor: "#3f51b5",
+      backgroundImage: `url("https://www.transparenttextures.com/patterns/asfalt-dark.png")`,
     },
-    large: {
-      width: theme.spacing(7),
-      height: theme.spacing(7),
+    avatar: {
+      width: "10rem",
+      height: "10rem",
     },
   })
 );
@@ -29,7 +35,7 @@ const Header = (props: IProps): ReactElement => {
 
   return (
     <header className={classes.root}>
-      <Avatar alt="Remy Sharp" src={avatarImg} className={classes.large} />
+      <Avatar alt="Remy Sharp" src={avatarImg} className={classes.avatar} />
       <h1>Hello, {props.username ? props.username : "Visitor"}!</h1>
     </header>
   );

@@ -22,7 +22,7 @@ interface IProps {
   errorMessage: string;
   tweets: TTweet[];
   submitTweetData: (tweetContent: string, userId: number) => Promise<void>;
-  handleProfileMenuOpen: () => void;
+  handleLoginOpen: () => void;
   submitFavouriteTweet: (userId: number, tweetId: number) => Promise<number>;
   currentUser: TCurrentUser;
   setErrorMessage: (msg: string | null) => void;
@@ -43,7 +43,7 @@ const Home = (props: IProps): ReactElement => {
         tweets={props.tweets}
         currentUser={props.currentUser}
         submitFavouriteTweet={props.submitFavouriteTweet}
-        handleProfileMenuOpen={props.handleProfileMenuOpen}
+        handleLoginOpen={props.handleLoginOpen}
       />
     </Fragment>
     // </div>

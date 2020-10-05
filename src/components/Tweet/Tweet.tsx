@@ -151,7 +151,7 @@ interface IProps {
   tweetFavourites: number;
   currentUserId: number;
   submitFavouriteTweet: (userId: number, tweetId: number) => Promise<number>;
-  handleProfileMenuOpen: () => void;
+  handleLoginOpen: () => void;
 }
 
 const Tweet = (props: IProps): ReactElement => {
@@ -172,7 +172,7 @@ const Tweet = (props: IProps): ReactElement => {
         .submitFavouriteTweet(props.currentUserId, tweetId)
         .then((res: number) => setTweetFavouriteCount(res));
     }
-    props.handleProfileMenuOpen();
+    props.handleLoginOpen();
   };
 
   return (

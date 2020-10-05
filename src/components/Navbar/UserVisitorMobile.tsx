@@ -7,10 +7,11 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 interface IProps {
   currentUser: object;
-  handleProfileMenuOpen: (e: MouseEvent<HTMLElement>) => void;
+  handleLoginOpen: (e: MouseEvent<HTMLElement>) => void;
   handleLogout: (e: MouseEvent) => void;
   handleRegisterMenuOpen: () => void;
 }
@@ -37,14 +38,14 @@ const UserVisitorMobile = (props: IProps): ReactElement => {
           </IconButton>
           <p>Notifications</p>
         </MenuItem>
-        <MenuItem onClick={props.handleProfileMenuOpen}>
+        <MenuItem onClick={props.handleLoginOpen}>
           <IconButton
             aria-label="account of current user"
             aria-controls="primary-search-account-menu"
             aria-haspopup="true"
             color="inherit"
           >
-            <PersonAddIcon />
+            <AccountCircle />
           </IconButton>
           <p>Profile</p>
         </MenuItem>
@@ -75,14 +76,14 @@ const UserVisitorMobile = (props: IProps): ReactElement => {
           </IconButton>
           <p>Sign Up</p>
         </MenuItem>
-        <MenuItem onClick={props.handleProfileMenuOpen}>
+        <MenuItem onClick={props.handleLoginOpen}>
           <IconButton
-            aria-label="account of current user"
+            aria-label="log in"
             aria-controls="primary-search-account-menu"
             aria-haspopup="true"
             color="inherit"
           >
-            <AccountCircle />
+            <LockOpenIcon />
           </IconButton>
           <p>Login</p>
         </MenuItem>
