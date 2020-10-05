@@ -1,12 +1,14 @@
 import React, { useState, FC, ReactElement } from "react";
+
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
-import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
-import TweetList from "./components/Tweet/TweetList";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
+
 import useApplicationData from "./hooks/useApplicationData";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.scss";
 
@@ -66,15 +68,27 @@ const App: FC = (): ReactElement => {
         submitRegisterData={submitRegisterData}
         errMessage={errorMessage}
       />
-      <Home
-        errorMessage={errorMessage}
-        tweets={tweets}
-        submitTweetData={submitTweetData}
-        handleProfileMenuOpen={handleProfileMenuOpen}
-        submitFavouriteTweet={submitFavouriteTweet}
-        currentUser={currentUser}
-        setErrorMessage={setErrorMessage}
-      />
+      <Router>
+        <Switch>
+          {currentUser && (
+            <Route path={`/user/${currentUser.id}`}>
+              <ProfilePage />
+            </Route>
+          )}
+
+          <Route path="/">
+            <Home
+              errorMessage={errorMessage}
+              tweets={tweets}
+              submitTweetData={submitTweetData}
+              handleProfileMenuOpen={handleProfileMenuOpen}
+              submitFavouriteTweet={submitFavouriteTweet}
+              currentUser={currentUser}
+              setErrorMessage={setErrorMessage}
+            />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 };
