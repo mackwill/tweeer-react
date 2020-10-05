@@ -5,6 +5,7 @@ import ComposeTweet from "./components/Compose_Tweet/ComposeTweet";
 import TweetList from "./components/Tweet/TweetList";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
+import Home from "./components/Home/Home";
 import useApplicationData from "./hooks/useApplicationData";
 
 import "./App.scss";
@@ -53,20 +54,6 @@ const App: FC = (): ReactElement => {
         handleRegisterMenuOpen={handleRegisterMenuOpen}
       />
       <Header username={currentUser ? currentUser.username : null} />
-      {currentUser && (
-        <ComposeTweet
-          submitTweetData={submitTweetData}
-          errMessage={errorMessage}
-          setErrorMessage={setErrorMessage}
-          userId={currentUser.id}
-        />
-      )}
-      <TweetList
-        tweets={tweets}
-        currentUser={currentUser}
-        submitFavouriteTweet={submitFavouriteTweet}
-        handleProfileMenuOpen={handleProfileMenuOpen}
-      />
       <Login
         open={loginOpen}
         handleClose={handleLoginClose}
@@ -78,6 +65,15 @@ const App: FC = (): ReactElement => {
         handleClose={handleRegistrationClose}
         submitRegisterData={submitRegisterData}
         errMessage={errorMessage}
+      />
+      <Home
+        errorMessage={errorMessage}
+        tweets={tweets}
+        submitTweetData={submitTweetData}
+        handleProfileMenuOpen={handleProfileMenuOpen}
+        submitFavouriteTweet={submitFavouriteTweet}
+        currentUser={currentUser}
+        setErrorMessage={setErrorMessage}
       />
     </div>
   );
