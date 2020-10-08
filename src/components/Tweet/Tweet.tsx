@@ -150,8 +150,8 @@ interface IProps {
   profilePictureUrl: string;
   tweetFavourites: number;
   currentUserId: number;
-  submitFavouriteTweet: (userId: number, tweetId: number) => Promise<number>;
-  handleLoginOpen: () => void;
+  submitFavouriteTweet?: (userId: number, tweetId: number) => Promise<number>;
+  handleLoginOpen?: () => void;
 }
 
 const Tweet = (props: IProps): ReactElement => {
@@ -167,12 +167,14 @@ const Tweet = (props: IProps): ReactElement => {
   );
 
   const favouriteTweet = (tweetId: number) => {
-    if (props.currentUserId) {
-      return props
-        .submitFavouriteTweet(props.currentUserId, tweetId)
-        .then((res: number) => setTweetFavouriteCount(res));
+    if (props.submitFavouriteTweet && props.handleLoginOpen) {
+      if (props.currentUserId) {
+        return props
+          .submitFavouriteTweet(props.currentUserId, tweetId)
+          .then((res: number) => setTweetFavouriteCount(res));
+      }
+      props.handleLoginOpen();
     }
-    props.handleLoginOpen();
   };
 
   return (

@@ -59,9 +59,20 @@ const useApplicationData = (): any => {
     });
   };
 
-  useEffect((): void => {
-    getTweets();
-  }, []);
+  const getTweetsForUser = (userId: number): Promise<void> => {
+    console.log("userId: ", userId);
+    return axios.get(`/api/tweets/user/${userId}`).then((res) => {
+      console.log("res hjere: ", res);
+      dispatch({
+        type: SET_TWEETS,
+        value: res.data,
+      });
+    });
+  };
+
+  // useEffect((): void => {
+  //   getTweets();
+  // }, []);
 
   const setErrorMessage = (msg: string | null): void => {
     dispatch({
@@ -149,6 +160,8 @@ const useApplicationData = (): any => {
     submitLogout,
     setErrorMessage,
     submitFavouriteTweet,
+    getTweetsForUser,
+    getTweets,
   };
 };
 

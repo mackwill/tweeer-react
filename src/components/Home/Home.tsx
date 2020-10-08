@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useEffect } from "react";
 import ComposeTweet from "../Compose_Tweet/ComposeTweet";
 import TweetList from "../Tweet/TweetList";
 
@@ -26,8 +26,13 @@ interface IProps {
   submitFavouriteTweet: (userId: number, tweetId: number) => Promise<number>;
   currentUser: TCurrentUser;
   setErrorMessage: (msg: string | null) => void;
+  getTweets: () => Promise<void>;
 }
 const Home = (props: IProps): ReactElement => {
+  useEffect((): void => {
+    props.getTweets();
+  }, []);
+
   return (
     // <div className="App">
     <Fragment>

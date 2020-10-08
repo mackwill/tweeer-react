@@ -32,8 +32,8 @@ interface ITweet {
 interface IProps {
   tweets: ITweet[];
   currentUser: any;
-  submitFavouriteTweet: (userId: number, tweetId: number) => Promise<number>;
-  handleLoginOpen: () => void;
+  submitFavouriteTweet?: (userId: number, tweetId: number) => Promise<number>;
+  handleLoginOpen?: () => void;
 }
 
 const TweetList = (props: IProps): ReactElement => {

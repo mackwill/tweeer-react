@@ -25,6 +25,8 @@ const App: FC = (): ReactElement => {
     submitLogout,
     setErrorMessage,
     submitFavouriteTweet,
+    getTweetsForUser,
+    getTweets,
   } = useApplicationData();
 
   const { currentUser, tweets, errorMessage } = state;
@@ -72,7 +74,11 @@ const App: FC = (): ReactElement => {
         <Switch>
           {currentUser && (
             <Route path={`/user/${currentUser.id}`}>
-              <ProfilePage />
+              <ProfilePage
+                currentUser={currentUser}
+                getTweetsForUser={getTweetsForUser}
+                tweets={tweets}
+              />
             </Route>
           )}
 
@@ -85,6 +91,7 @@ const App: FC = (): ReactElement => {
               submitFavouriteTweet={submitFavouriteTweet}
               currentUser={currentUser}
               setErrorMessage={setErrorMessage}
+              getTweets={getTweets}
             />
           </Route>
         </Switch>
